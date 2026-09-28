@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ColorExtract — Extract colors from any image. Powerful, instant, client-side color palette generator with HEX, RGB, HSL, CSS, and PNG export.">
+  <meta name="keywords" content="color extract, extract colors from image, color palette generator, hex code extractor, image palette, designer colors">
+  <meta name="theme-color" content="#0b0f19">
+  <title>ColorExtract — Extract Colors From Any Image 🎨</title>
+
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.2-.64-1.67-.08-.1-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 8 6.5 8s1.5.67 1.5 1.5S7.33 11 6.5 11zm3-4c-.83 0-1.5-.67-1.5-1.5S8.67 4 9.5 4s1.5.67 1.5 1.5S10.33 7 9.5 7zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 4 14.5 4s1.5.67 1.5 1.5S15.33 7 14.5 7zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8s1.5.67 1.5 1.5S18.33 11 17.5 11z'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ColorExtract">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="app-container nav-wrapper">
+      <a href="#hero-section" class="nav-brand">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+        </div>
+        <span data-i18n="brandName">ColorExtract</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#hero-section" class="nav-link" data-i18n="navHome">Home</a></li>
+        <li><a href="#how-it-works-section" class="nav-link" data-i18n="navHowItWorks">How It Works</a></li>
+        <li><a href="#preview-mockup-section" class="nav-link" data-i18n="navPreview">UI Preview</a></li>
+        <li><a href="#about-section" class="nav-link" data-i18n="navAbout">About</a></li>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button type="button" class="btn-icon-toggle" id="lang-toggle-btn" title="Change Language / تغيير اللغة">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span class="lang-label">العربية</span>
+        </button>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button type="button" class="btn-icon-toggle btn-icon-only" id="theme-toggle-btn" title="Toggle Theme">
+          <span id="theme-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Mobile Menu Hamburger -->
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#hero-section" class="nav-link" data-i18n="navHome">Home</a>
+      <a href="#how-it-works-section" class="nav-link" data-i18n="navHowItWorks">How It Works</a>
+      <a href="#preview-mockup-section" class="nav-link" data-i18n="navPreview">UI Preview</a>
+      <a href="#about-section" class="nav-link" data-i18n="navAbout">About</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero-section">
+      <div class="app-container">
+        <!-- Badge -->
+        <div class="hero-badge-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span data-i18n="heroBadge">100% In-Browser & Private</span>
+        </div>
+
+        <!-- Headline & Subtitle -->
+        <h1 class="hero-title" data-i18n="heroTitle">Extract Colors From Any Image 🎨</h1>
+        <p class="hero-subtitle" data-i18n="heroSubtitle">Upload an image and instantly discover its most important colors with HEX, RGB, and HSL values ready to use.</p>
+
+        <!-- Prominent Button -->
+        <div>
+          <button type="button" class="btn-primary" id="hero-upload-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span data-i18n="btnUpload">Upload Image</span>
+          </button>
+        </div>
+
+        <!-- Large Drag & Drop Area -->
+        <div class="upload-container">
+          <div class="dropzone" id="dropzone">
+            <div class="dropzone-icon-circle">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <h3 class="dropzone-title" data-i18n="dropzoneTitle">Drop your image here, or browse</h3>
+            <p class="dropzone-subtitle" data-i18n="dropzoneSubtitle">Supports JPG, JPEG, PNG, WEBP (Max 25MB)</p>
+            <div class="privacy-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span data-i18n="privacyNotice">Your image is processed locally in your browser whenever possible.</span>
+            </div>
+          </div>
+
+          <!-- Hidden File Input -->
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+
+          <!-- Instant Sample Images Bar -->
+          <div class="samples-wrapper">
+            <p class="samples-title" data-i18n="sampleImagesTitle">Or try with an instant sample image:</p>
+            <div class="samples-grid">
+              <button type="button" class="sample-btn sample-sunset" data-sample="sunset">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleSunset">Sunset Coast</span>
+              </button>
+              <button type="button" class="sample-btn sample-cyberpunk" data-sample="cyberpunk">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleCyberpunk">Cyberpunk City</span>
+              </button>
+              <button type="button" class="sample-btn sample-nature" data-sample="nature">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleNature">Forest Fern</span>
+              </button>
+              <button type="button" class="sample-btn sample-minimal" data-sample="minimal">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleMinimal">Warm Terracotta</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMAGE PREVIEW & EXTRACTION CONTROLS CARD -->
+        <div class="preview-section hidden" id="preview-section">
+          <div class="preview-card">
+            <!-- Media Box -->
+            <div class="preview-media-box">
+              <img id="preview-img" alt="Uploaded Preview">
+            </div>
+
+            <!-- Controls & Details -->
+            <div class="preview-info">
+              <div class="preview-meta-row">
+                <h4 class="preview-filename" id="preview-filename">image.jpg</h4>
+                <div class="preview-tags">
+                  <span class="meta-badge" id="preview-dimensions">1920 × 1080 px</span>
+                  <span class="meta-badge" id="preview-size">1.2 MB</span>
+                </div>
+              </div>
+
+              <!-- Color Count Options -->
+              <div class="count-options-wrapper">
+                <label class="count-options-label" data-i18n="optionsTitle">Number of Colors to Extract</label>
+                <div class="count-options-grid">
+                  <button type="button" class="count-option-btn" data-count="3" data-i18n="colorCount3">3 Colors</button>
+                  <button type="button" class="count-option-btn active" data-count="5" data-i18n="colorCount5">5 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="8" data-i18n="colorCount8">8 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="10" data-i18n="colorCount10">10 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="20" data-i18n="colorCount20">20 Colors</button>
+                  <button type="button" class="count-option-btn all-colors-option" data-count="all" data-i18n="colorCountAll">All Colors</button>
+                </div>
+                <div class="all-colors-note hidden" id="all-colors-note" data-i18n="allColorsNote">
+                  All Colors — Detect all meaningful colors in the image while automatically removing nearly identical shades.
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="preview-actions">
+                <button type="button" class="btn-primary" id="btn-extract-colors">
+                  <span class="spinner hidden" id="extract-spinner"></span>
+                  <svg id="sparkle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                  </svg>
+                  <span id="extract-btn-text" data-i18n="btnExtract">Extract Colors</span>
+                </button>
+                <button type="button" class="btn-secondary" id="btn-replace-image">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  </svg>
+                  <span data-i18n="btnReplace">Replace Image</span>
+                </button>
+                <button type="button" class="btn-danger-outline" id="btn-remove-image">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span data-i18n="btnRemove">Remove</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PALETTE SECTION -->
+    <section class="palette-section hidden" id="palette-section">
+      <div class="app-container">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title">
+              <span data-i18n="paletteTitle">Extracted Color Palette</span>
+              <span class="count-pill-badge" id="colors-count-badge">5 colors detected</span>
+            </h2>
+            <p class="section-subtitle" data-i18n="paletteSubtitle">Click any color card to copy its HEX code instantly.</p>
+          </div>
+
+          <div class="section-controls">
+            <!-- Sort dropdown -->
+            <div class="sort-wrapper">
+              <label for="sort-select" class="sort-label" data-i18n="sortLabel">Sort by:</label>
+              <select id="sort-select" class="sort-select">
+                <option value="dominant" data-i18n="sortDominant">Dominant</option>
+                <option value="brightness" data-i18n="sortBrightness">Brightness</option>
+                <option value="hue" data-i18n="sortHue">Hue</option>
+                <option value="saturation" data-i18n="sortSaturation">Saturation</option>
+              </select>
+            </div>
+
+            <!-- Download Palette PNG -->
+            <button type="button" class="btn-primary" id="btn-download-palette">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span data-i18n="btnDownloadPalette">Download Palette</span>
+            </button>
+
+            <!-- Export Options -->
+            <button type="button" class="btn-secondary" id="btn-open-export-modal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <polyline points="16 6 12 2 8 6"/>
+                <line x1="12" y1="2" x2="12" y2="15"/>
+              </svg>
+              <span data-i18n="btnExportOptions">Export Options</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Palette Grid -->
+        <div class="palette-grid" id="palette-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOR GRADIENT SECTION -->
+    <section class="gradient-section hidden" id="gradient-section">
+      <div class="app-container">
+        <div class="section-title-wrap" style="margin-bottom: 24px;">
+          <h2 class="section-title" data-i18n="gradientTitle">Color Gradient</h2>
+          <p class="section-subtitle" data-i18n="gradientSubtitle">Automatically generated gradient using your extracted colors.</p>
+        </div>
+
+        <div class="gradient-card">
+          <!-- Gradient Box -->
+          <div class="gradient-preview-box" id="gradient-box"></div>
+
+          <!-- Controls -->
+          <div class="gradient-controls">
+            <div class="gradient-types-row">
+              <button type="button" class="gradient-type-btn active" data-type="linear" data-i18n="gradientLinear">Linear</button>
+              <button type="button" class="gradient-type-btn" data-type="radial" data-i18n="gradientRadial">Radial</button>
+              <button type="button" class="gradient-type-btn" data-type="conic" data-i18n="gradientConic">Conic</button>
+            </div>
+
+            <div class="gradient-slider-wrap">
+              <div class="slider-header">
+                <span data-i18n="gradientAngle">Angle</span>
+                <span id="gradient-angle-value">135°</span>
+              </div>
+              <input type="range" min="0" max="360" value="135" class="gradient-slider" id="gradient-angle-slider">
+            </div>
+
+            <div class="gradient-code-box" id="gradient-code-display">
+              background: linear-gradient(135deg, #2B5D8A, #F2F0E8, #8A5A44);
+            </div>
+
+            <button type="button" class="btn-primary" id="btn-copy-gradient-css">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span data-i18n="btnCopyCss">Copy CSS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOR PREVIEW (UI MOCKUP) SECTION -->
+    <section class="preview-mockup-section hidden" id="preview-mockup-section">
+      <div class="app-container">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="previewSectionTitle">Color Preview</h2>
+            <p class="section-subtitle" data-i18n="previewSectionSubtitle">See how your extracted palette works inside a real user interface design.</p>
+          </div>
+          <button type="button" class="btn-secondary" id="btn-shuffle-mockup">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"/>
+              <line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/>
+              <line x1="15" y1="15" x2="21" y2="21"/>
+              <line x1="4" y1="4" x2="9" y2="9"/>
+            </svg>
+            <span data-i18n="shuffleColors">Shuffle Palette Roles</span>
+          </button>
+        </div>
+
+        <!-- Realistic Interactive SaaS UI Mockup -->
+        <div class="mockup-container" id="mockup-container">
+          <div class="mockup-left">
+            <div class="mockup-badge" id="mockup-badge" data-i18n="mockupBadge">Design System</div>
+            <h3 class="mockup-heading" id="mockup-heading" data-i18n="mockupHeading">Build Beautiful Products</h3>
+            <p class="mockup-paragraph" id="mockup-paragraph" data-i18n="mockupParagraph">
+              This interactive preview applies your extracted palette across backgrounds, headings, buttons, cards, and subtle accents.
+            </p>
+            <div class="mockup-btn-row">
+              <button type="button" class="mockup-btn-primary" id="mockup-primary-btn" data-i18n="mockupPrimaryBtn">Get Started</button>
+              <button type="button" class="mockup-btn-secondary" id="mockup-secondary-btn" data-i18n="mockupSecondaryBtn">Learn More</button>
+            </div>
+          </div>
+
+          <div class="mockup-right">
+            <div class="mockup-card" id="mockup-card">
+              <div class="mockup-card-header">
+                <h4 class="mockup-card-title" data-i18n="mockupCardTitle">Active Color Harmony</h4>
+                <span class="mockup-tag" data-i18n="mockupTag">Palette Verified</span>
+              </div>
+              <p class="mockup-card-desc" data-i18n="mockupCardDesc">Balanced light, dark, and vibrant accents derived directly from your image.</p>
+              <div class="mockup-metric-wrap">
+                <div class="mockup-metric-header">
+                  <span data-i18n="mockupMetricLabel">Color Harmony Score</span>
+                  <span data-i18n="mockupMetricValue">98.4%</span>
+                </div>
+                <div class="mockup-metric-track">
+                  <div class="mockup-metric-fill" id="mockup-metric-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-it-works-section" id="how-it-works-section">
+      <div class="app-container">
+        <div class="section-title-wrap" style="text-align: center; align-items: center;">
+          <h2 class="section-title" data-i18n="howItWorksTitle">How It Works</h2>
+          <p class="section-subtitle" data-i18n="howItWorksSubtitle">Simple, fast, and completely client-side in three easy steps.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number" data-i18n="step1Num">01</div>
+            <h3 class="step-title" data-i18n="step1Title">Upload</h3>
+            <p class="step-desc" data-i18n="step1Desc">Upload your image via drag-and-drop or file picker. Supports JPG, JPEG, PNG, and WEBP.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" data-i18n="step2Num">02</div>
+            <h3 class="step-title" data-i18n="step2Title">Analyze</h3>
+            <p class="step-desc" data-i18n="step2Desc">ColorExtract analyzes pixels and identifies meaningful colors using intelligent color quantization.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" data-i18n="step3Num">03</div>
+            <h3 class="step-title" data-i18n="step3Title">Get Your Palette</h3>
+            <p class="step-desc" data-i18n="step3Desc">Copy, download, or export your color palette in HEX, RGB, HSL, CSS, PNG, or JSON formats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT & PRIVACY SECTION -->
+    <section class="about-section" id="about-section">
+      <div class="app-container">
+        <div class="about-grid">
+          <div class="about-card">
+            <h3 class="about-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span data-i18n="aboutTitle">About ColorExtract</span>
+            </h3>
+            <p class="about-card-desc" data-i18n="aboutDesc">
+              ColorExtract is a modern image color extraction tool built for designers, content creators, developers, and digital artists. It runs advanced color clustering algorithms entirely inside your browser, giving you instant, beautiful palettes with zero server latency.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <h3 class="about-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span data-i18n="privacyTitle">Your Privacy Comes First</span>
+            </h3>
+            <p class="about-card-desc" data-i18n="privacyDesc">
+              Your photos and graphics are processed locally on your device. ColorExtract does not upload, transmit, or store your images on any remote server. Your creativity stays yours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="app-container footer-content">
+      <div class="footer-brand">
+        <span class="footer-brand-title" data-i18n="brandName">ColorExtract</span>
+        <span class="footer-tagline" data-i18n="footerTagline">ColorExtract — Extract colors. Create better designs.</span>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="#hero-section" class="footer-link" data-i18n="navHome">Home</a></li>
+        <li><a href="#how-it-works-section" class="footer-link" data-i18n="footerHowItWorks">How It Works</a></li>
+        <li><a href="#about-section" class="footer-link" data-i18n="footerAbout">About</a></li>
+        <li><a href="#about-section" class="footer-link" data-i18n="footerPrivacy">Privacy</a></li>
+      </ul>
+
+      <div class="footer-copyright">
+        &copy; 2026 ColorExtract. <span data-i18n="footerRights">All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EXPORT MODAL -->
+  <div class="modal-overlay" id="export-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title" data-i18n="exportModalTitle">Export Color Palette</h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-tabs">
+        <button type="button" class="export-tab-btn active" data-tab="css" data-i18n="tabCss">CSS Variables</button>
+        <button type="button" class="export-tab-btn" data-tab="json" data-i18n="tabJson">JSON</button>
+        <button type="button" class="export-tab-btn" data-tab="tailwind" data-i18n="tabTailwind">Tailwind CSS</button>
+        <button type="button" class="export-tab-btn" data-tab="txt" data-i18n="tabTxt">Plain Text</button>
+        <button type="button" class="export-tab-btn" data-tab="svg" data-i18n="tabSvg">SVG Vector</button>
+      </div>
+
+      <div class="modal-body">
+        <pre class="export-code-box" id="export-code-content"></pre>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="btn-copy-export-code">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span data-i18n="btnCopyCode">Copy Code</span>
+        </button>
+        <button type="button" class="btn-primary" id="btn-download-export-file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span data-i18n="btnDownloadFile">Download File</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST ALERT -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span id="toast-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </span>
+    <span id="toast-message" data-i18n="copied">Copied!</span>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/i18n.js"></script>
+  <script src="js/extractor.js"></script>
+  <script src="js/exporter.js"></script>
+  <script src="js/samples.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
