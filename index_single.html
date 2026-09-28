@@ -1,0 +1,4524 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ColorExtract — Extract colors from any image. Powerful, instant, client-side color palette generator with HEX, RGB, HSL, CSS, and PNG export.">
+  <meta name="keywords" content="color extract, extract colors from image, color palette generator, hex code extractor, image palette, designer colors">
+  <meta name="theme-color" content="#0b0f19">
+  <title>ColorExtract — Extract Colors From Any Image 🎨</title>
+
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.2-.64-1.67-.08-.1-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 8 6.5 8s1.5.67 1.5 1.5S7.33 11 6.5 11zm3-4c-.83 0-1.5-.67-1.5-1.5S8.67 4 9.5 4s1.5.67 1.5 1.5S10.33 7 9.5 7zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 4 14.5 4s1.5.67 1.5 1.5S15.33 7 14.5 7zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8s1.5.67 1.5 1.5S18.33 11 17.5 11z'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ColorExtract">
+
+  <!-- Stylesheet -->
+  <style>
+/**
+ * ColorExtract - Design System & Modern Responsive Stylesheet
+ * Full LTR & RTL support, Dark/Light modes, SaaS-grade UI components
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* Common Brand Colors */
+  --brand-primary: #6366f1;
+  --brand-primary-hover: #4f46e5;
+  --brand-primary-light: rgba(99, 102, 241, 0.12);
+  --brand-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --brand-gradient-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+  --brand-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --font-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ar: 'Cairo', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  
+  --border-subtle: #e2e8f0;
+  --border-card: #cbd5e1;
+  --border-focus: #6366f1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.12), 0 6px 12px rgba(15, 23, 42, 0.06);
+
+  --dropzone-bg: #f8fafc;
+  --dropzone-border: #cbd5e1;
+  --dropzone-hover-bg: #f0f4ff;
+
+  --code-bg: #1e293b;
+  --code-text: #f8fafc;
+}
+
+/* Dark Theme Variables (Default) */
+[data-theme="dark"] {
+  --bg-body: #0b0f19;
+  --bg-surface: #111827;
+  --bg-surface-elevated: #162032;
+  --bg-secondary: #1a2234;
+  --bg-tertiary: #222d42;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-focus: #818cf8;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 14px 38px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 20px 48px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(99, 102, 241, 0.15);
+
+  --dropzone-bg: rgba(17, 24, 39, 0.6);
+  --dropzone-border: rgba(255, 255, 255, 0.15);
+  --dropzone-hover-bg: rgba(99, 102, 241, 0.08);
+
+  --code-bg: #070b12;
+  --code-text: #e2e8f0;
+}
+
+/* Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-en);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-base), color var(--transition-base);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* RTL Typography & Direction overrides */
+body.rtl-layout, [dir="rtl"] body {
+  font-family: var(--font-ar);
+  direction: rtl;
+  text-align: right;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  direction: ltr !important;
+  display: inline-block;
+}
+
+/* App Container */
+.app-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- NAVIGATION BAR --- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(11, 15, 25, 0.82);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+[data-theme="light"] .navbar {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--brand-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  color: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--brand-primary);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-icon-toggle:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-card);
+  transform: translateY(-1px);
+}
+
+.btn-icon-only {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 6px;
+}
+
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 16px 24px;
+  gap: 16px;
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+  padding: 64px 0 32px;
+  text-align: center;
+}
+
+.hero-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--brand-primary-light);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: var(--brand-primary);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+/* Hero Action Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--brand-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+  background: var(--brand-gradient-hover);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- DRAG & DROP AREA --- */
+.upload-container {
+  max-width: 760px;
+  margin: 28px auto 0;
+}
+
+.dropzone {
+  background-color: var(--dropzone-bg);
+  border: 2px dashed var(--dropzone-border);
+  border-radius: var(--radius-xl);
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.dropzone:hover, .dropzone.drag-active {
+  border-color: var(--brand-primary);
+  background-color: var(--dropzone-hover-bg);
+  box-shadow: var(--brand-glow);
+  transform: scale(1.008);
+}
+
+.dropzone-icon-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--brand-primary-light);
+  color: var(--brand-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  transition: transform var(--transition-base);
+}
+
+.dropzone:hover .dropzone-icon-circle {
+  transform: scale(1.1) rotate(6deg);
+}
+
+.dropzone-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.dropzone-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.privacy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background-color: var(--bg-secondary);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+/* Sample Images Section */
+.samples-wrapper {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.samples-title {
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.samples-grid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sample-btn {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.sample-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--brand-primary);
+  transform: translateY(-1px);
+}
+
+.sample-badge-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.sample-sunset .sample-badge-dot { background: linear-gradient(135deg, #ff5e36, #ffa500); }
+.sample-cyberpunk .sample-badge-dot { background: linear-gradient(135deg, #ff007f, #00f5d4); }
+.sample-nature .sample-badge-dot { background: linear-gradient(135deg, #10b981, #059669); }
+.sample-minimal .sample-badge-dot { background: linear-gradient(135deg, #c2410c, #eab308); }
+
+/* --- IMAGE PREVIEW & EXTRACTION CONTROLS --- */
+.preview-section {
+  margin: 32px auto 0;
+  max-width: 920px;
+}
+
+.preview-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.preview-media-box {
+  width: 100%;
+  height: 240px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.preview-media-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-base);
+}
+
+.preview-media-box:hover img {
+  transform: scale(1.02);
+}
+
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.preview-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.preview-filename {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.preview-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.meta-badge {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+/* Palette Size Selector */
+.count-options-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.count-options-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.count-options-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.count-option-btn {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.count-option-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-card);
+}
+
+.count-option-btn.active {
+  background: var(--brand-primary);
+  color: #ffffff;
+  border-color: var(--brand-primary);
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35);
+}
+
+.all-colors-option {
+  position: relative;
+  font-weight: 700;
+}
+
+.all-colors-note {
+  font-size: 0.825rem;
+  color: var(--brand-primary);
+  background-color: var(--brand-primary-light);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  line-height: 1.4;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  margin-top: 4px;
+}
+
+/* Preview Actions */
+.preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-card);
+}
+
+.btn-danger-outline {
+  background: none;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--error-color);
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-danger-outline:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--error-color);
+}
+
+/* --- EXTRACTED COLOR PALETTE SECTION --- */
+.palette-section {
+  padding: 56px 0 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.section-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+}
+
+.count-pill-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--brand-primary-light);
+  color: var(--brand-primary);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.section-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.sort-select {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.sort-select option {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+/* Palette Grid */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+}
+
+.color-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: cardFadeUp 0.4s ease forwards;
+}
+
+@keyframes cardFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.color-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--brand-primary);
+}
+
+.color-card.copy-pulse {
+  animation: copyPulseAnim 0.35s ease-out;
+}
+
+@keyframes copyPulseAnim {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.color-swatch-box {
+  width: 100%;
+  height: 125px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.swatch-percentage-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+[dir="rtl"] .swatch-percentage-pill {
+  right: auto;
+  left: 10px;
+}
+
+.swatch-copy-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all var(--transition-fast);
+}
+
+.color-card:hover .swatch-copy-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.color-details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.color-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-hex {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.color-name-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  background-color: var(--bg-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.color-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+}
+
+.metric-label {
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.metric-value {
+  font-weight: 600;
+}
+
+.metric-usage-bar-wrap {
+  flex-grow: 1;
+  height: 6px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  margin: 0 8px;
+  overflow: hidden;
+}
+
+.metric-usage-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-smooth);
+}
+
+.color-actions {
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-copy-format {
+  flex: 1;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.btn-copy-format:hover {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  border-color: var(--brand-primary);
+}
+
+/* --- GRADIENT SECTION --- */
+.gradient-section {
+  padding: 32px 0;
+}
+
+.gradient-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: center;
+}
+
+.gradient-preview-box {
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gradient-types-row {
+  display: flex;
+  gap: 8px;
+}
+
+.gradient-type-btn {
+  flex: 1;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.gradient-type-btn.active {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  border-color: var(--brand-primary);
+}
+
+.gradient-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.gradient-slider {
+  width: 100%;
+  accent-color: var(--brand-primary);
+  cursor: pointer;
+}
+
+.gradient-code-box {
+  background-color: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  word-break: break-all;
+  user-select: all;
+  border: 1px solid var(--border-subtle);
+}
+
+/* --- COLOR PREVIEW (UI MOCKUP) --- */
+.preview-mockup-section {
+  padding: 32px 0 56px;
+}
+
+.mockup-container {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+  transition: border-color var(--transition-base);
+}
+
+.mockup-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mockup-badge {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: all var(--transition-base);
+}
+
+.mockup-heading {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.mockup-paragraph {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.mockup-btn-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.mockup-btn-primary {
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.mockup-btn-secondary {
+  padding: 11px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: transparent;
+  border: 2px solid currentColor;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.mockup-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mockup-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border-color var(--transition-base);
+}
+
+.mockup-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mockup-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.mockup-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--success-color);
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.mockup-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.mockup-metric-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mockup-metric-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.mockup-metric-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.mockup-metric-fill {
+  width: 85%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-base);
+}
+
+/* --- HOW IT WORKS SECTION --- */
+.how-it-works-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.step-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-card);
+  box-shadow: var(--shadow-md);
+}
+
+.step-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--brand-primary);
+  opacity: 0.8;
+  line-height: 1;
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.step-desc {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- ABOUT & PRIVACY SECTION --- */
+.about-section {
+  padding: 56px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.about-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+}
+
+.about-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+}
+
+.about-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* --- FOOTER --- */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  padding: 40px 0;
+  transition: background-color var(--transition-base);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-brand-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+
+.footer-tagline {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-link {
+  text-decoration: none;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--brand-primary);
+}
+
+.footer-copyright {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+/* --- EXPORT MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+}
+
+.modal-window {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 640px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-base);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-overlay.active .modal-window {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.modal-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.export-tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.export-tab-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.export-tab-btn.active {
+  color: var(--brand-primary);
+  background-color: var(--brand-primary-light);
+}
+
+.modal-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.export-code-box {
+  background-color: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  line-height: 1.6;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  max-height: 320px;
+  overflow-y: auto;
+  white-space: pre;
+  border: 1px solid var(--border-subtle);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all var(--transition-base);
+}
+
+[dir="rtl"] .toast {
+  right: auto;
+  left: 28px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.toast-success {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.toast-success #toast-icon {
+  color: var(--success-color);
+}
+
+.toast-error {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.toast-error #toast-icon {
+  color: var(--error-color);
+}
+
+/* Spinner Animations */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+.spinner-small {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+[dir="rtl"] .spinner-small {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Utility Hidden */
+.hidden {
+  display: none !important;
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .preview-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .gradient-card {
+    grid-template-columns: 1fr;
+  }
+
+  .mockup-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .color-swatch-box {
+    height: 95px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="app-container nav-wrapper">
+      <a href="#hero-section" class="nav-brand">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+        </div>
+        <span data-i18n="brandName">ColorExtract</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#hero-section" class="nav-link" data-i18n="navHome">Home</a></li>
+        <li><a href="#how-it-works-section" class="nav-link" data-i18n="navHowItWorks">How It Works</a></li>
+        <li><a href="#preview-mockup-section" class="nav-link" data-i18n="navPreview">UI Preview</a></li>
+        <li><a href="#about-section" class="nav-link" data-i18n="navAbout">About</a></li>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button type="button" class="btn-icon-toggle" id="lang-toggle-btn" title="Change Language / تغيير اللغة">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span class="lang-label">العربية</span>
+        </button>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button type="button" class="btn-icon-toggle btn-icon-only" id="theme-toggle-btn" title="Toggle Theme">
+          <span id="theme-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Mobile Menu Hamburger -->
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#hero-section" class="nav-link" data-i18n="navHome">Home</a>
+      <a href="#how-it-works-section" class="nav-link" data-i18n="navHowItWorks">How It Works</a>
+      <a href="#preview-mockup-section" class="nav-link" data-i18n="navPreview">UI Preview</a>
+      <a href="#about-section" class="nav-link" data-i18n="navAbout">About</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero-section">
+      <div class="app-container">
+        <!-- Badge -->
+        <div class="hero-badge-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span data-i18n="heroBadge">100% In-Browser & Private</span>
+        </div>
+
+        <!-- Headline & Subtitle -->
+        <h1 class="hero-title" data-i18n="heroTitle">Extract Colors From Any Image 🎨</h1>
+        <p class="hero-subtitle" data-i18n="heroSubtitle">Upload an image and instantly discover its most important colors with HEX, RGB, and HSL values ready to use.</p>
+
+        <!-- Prominent Button -->
+        <div>
+          <button type="button" class="btn-primary" id="hero-upload-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span data-i18n="btnUpload">Upload Image</span>
+          </button>
+        </div>
+
+        <!-- Large Drag & Drop Area -->
+        <div class="upload-container">
+          <div class="dropzone" id="dropzone">
+            <div class="dropzone-icon-circle">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <h3 class="dropzone-title" data-i18n="dropzoneTitle">Drop your image here, or browse</h3>
+            <p class="dropzone-subtitle" data-i18n="dropzoneSubtitle">Supports JPG, JPEG, PNG, WEBP (Max 25MB)</p>
+            <div class="privacy-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span data-i18n="privacyNotice">Your image is processed locally in your browser whenever possible.</span>
+            </div>
+          </div>
+
+          <!-- Hidden File Input -->
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" class="hidden">
+
+          <!-- Instant Sample Images Bar -->
+          <div class="samples-wrapper">
+            <p class="samples-title" data-i18n="sampleImagesTitle">Or try with an instant sample image:</p>
+            <div class="samples-grid">
+              <button type="button" class="sample-btn sample-sunset" data-sample="sunset">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleSunset">Sunset Coast</span>
+              </button>
+              <button type="button" class="sample-btn sample-cyberpunk" data-sample="cyberpunk">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleCyberpunk">Cyberpunk City</span>
+              </button>
+              <button type="button" class="sample-btn sample-nature" data-sample="nature">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleNature">Forest Fern</span>
+              </button>
+              <button type="button" class="sample-btn sample-minimal" data-sample="minimal">
+                <span class="sample-badge-dot"></span>
+                <span data-i18n="sampleMinimal">Warm Terracotta</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMAGE PREVIEW & EXTRACTION CONTROLS CARD -->
+        <div class="preview-section hidden" id="preview-section">
+          <div class="preview-card">
+            <!-- Media Box -->
+            <div class="preview-media-box">
+              <img id="preview-img" alt="Uploaded Preview">
+            </div>
+
+            <!-- Controls & Details -->
+            <div class="preview-info">
+              <div class="preview-meta-row">
+                <h4 class="preview-filename" id="preview-filename">image.jpg</h4>
+                <div class="preview-tags">
+                  <span class="meta-badge" id="preview-dimensions">1920 × 1080 px</span>
+                  <span class="meta-badge" id="preview-size">1.2 MB</span>
+                </div>
+              </div>
+
+              <!-- Color Count Options -->
+              <div class="count-options-wrapper">
+                <label class="count-options-label" data-i18n="optionsTitle">Number of Colors to Extract</label>
+                <div class="count-options-grid">
+                  <button type="button" class="count-option-btn" data-count="3" data-i18n="colorCount3">3 Colors</button>
+                  <button type="button" class="count-option-btn active" data-count="5" data-i18n="colorCount5">5 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="8" data-i18n="colorCount8">8 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="10" data-i18n="colorCount10">10 Colors</button>
+                  <button type="button" class="count-option-btn" data-count="20" data-i18n="colorCount20">20 Colors</button>
+                  <button type="button" class="count-option-btn all-colors-option" data-count="all" data-i18n="colorCountAll">All Colors</button>
+                </div>
+                <div class="all-colors-note hidden" id="all-colors-note" data-i18n="allColorsNote">
+                  All Colors — Detect all meaningful colors in the image while automatically removing nearly identical shades.
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="preview-actions">
+                <button type="button" class="btn-primary" id="btn-extract-colors">
+                  <span class="spinner hidden" id="extract-spinner"></span>
+                  <svg id="sparkle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                  </svg>
+                  <span id="extract-btn-text" data-i18n="btnExtract">Extract Colors</span>
+                </button>
+                <button type="button" class="btn-secondary" id="btn-replace-image">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  </svg>
+                  <span data-i18n="btnReplace">Replace Image</span>
+                </button>
+                <button type="button" class="btn-danger-outline" id="btn-remove-image">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span data-i18n="btnRemove">Remove</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PALETTE SECTION -->
+    <section class="palette-section hidden" id="palette-section">
+      <div class="app-container">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title">
+              <span data-i18n="paletteTitle">Extracted Color Palette</span>
+              <span class="count-pill-badge" id="colors-count-badge">5 colors detected</span>
+            </h2>
+            <p class="section-subtitle" data-i18n="paletteSubtitle">Click any color card to copy its HEX code instantly.</p>
+          </div>
+
+          <div class="section-controls">
+            <!-- Sort dropdown -->
+            <div class="sort-wrapper">
+              <label for="sort-select" class="sort-label" data-i18n="sortLabel">Sort by:</label>
+              <select id="sort-select" class="sort-select">
+                <option value="dominant" data-i18n="sortDominant">Dominant</option>
+                <option value="brightness" data-i18n="sortBrightness">Brightness</option>
+                <option value="hue" data-i18n="sortHue">Hue</option>
+                <option value="saturation" data-i18n="sortSaturation">Saturation</option>
+              </select>
+            </div>
+
+            <!-- Download Palette PNG -->
+            <button type="button" class="btn-primary" id="btn-download-palette">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span data-i18n="btnDownloadPalette">Download Palette</span>
+            </button>
+
+            <!-- Export Options -->
+            <button type="button" class="btn-secondary" id="btn-open-export-modal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <polyline points="16 6 12 2 8 6"/>
+                <line x1="12" y1="2" x2="12" y2="15"/>
+              </svg>
+              <span data-i18n="btnExportOptions">Export Options</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Palette Grid -->
+        <div class="palette-grid" id="palette-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOR GRADIENT SECTION -->
+    <section class="gradient-section hidden" id="gradient-section">
+      <div class="app-container">
+        <div class="section-title-wrap" style="margin-bottom: 24px;">
+          <h2 class="section-title" data-i18n="gradientTitle">Color Gradient</h2>
+          <p class="section-subtitle" data-i18n="gradientSubtitle">Automatically generated gradient using your extracted colors.</p>
+        </div>
+
+        <div class="gradient-card">
+          <!-- Gradient Box -->
+          <div class="gradient-preview-box" id="gradient-box"></div>
+
+          <!-- Controls -->
+          <div class="gradient-controls">
+            <div class="gradient-types-row">
+              <button type="button" class="gradient-type-btn active" data-type="linear" data-i18n="gradientLinear">Linear</button>
+              <button type="button" class="gradient-type-btn" data-type="radial" data-i18n="gradientRadial">Radial</button>
+              <button type="button" class="gradient-type-btn" data-type="conic" data-i18n="gradientConic">Conic</button>
+            </div>
+
+            <div class="gradient-slider-wrap">
+              <div class="slider-header">
+                <span data-i18n="gradientAngle">Angle</span>
+                <span id="gradient-angle-value">135°</span>
+              </div>
+              <input type="range" min="0" max="360" value="135" class="gradient-slider" id="gradient-angle-slider">
+            </div>
+
+            <div class="gradient-code-box" id="gradient-code-display">
+              background: linear-gradient(135deg, #2B5D8A, #F2F0E8, #8A5A44);
+            </div>
+
+            <button type="button" class="btn-primary" id="btn-copy-gradient-css">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span data-i18n="btnCopyCss">Copy CSS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOR PREVIEW (UI MOCKUP) SECTION -->
+    <section class="preview-mockup-section hidden" id="preview-mockup-section">
+      <div class="app-container">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title" data-i18n="previewSectionTitle">Color Preview</h2>
+            <p class="section-subtitle" data-i18n="previewSectionSubtitle">See how your extracted palette works inside a real user interface design.</p>
+          </div>
+          <button type="button" class="btn-secondary" id="btn-shuffle-mockup">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"/>
+              <line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/>
+              <line x1="15" y1="15" x2="21" y2="21"/>
+              <line x1="4" y1="4" x2="9" y2="9"/>
+            </svg>
+            <span data-i18n="shuffleColors">Shuffle Palette Roles</span>
+          </button>
+        </div>
+
+        <!-- Realistic Interactive SaaS UI Mockup -->
+        <div class="mockup-container" id="mockup-container">
+          <div class="mockup-left">
+            <div class="mockup-badge" id="mockup-badge" data-i18n="mockupBadge">Design System</div>
+            <h3 class="mockup-heading" id="mockup-heading" data-i18n="mockupHeading">Build Beautiful Products</h3>
+            <p class="mockup-paragraph" id="mockup-paragraph" data-i18n="mockupParagraph">
+              This interactive preview applies your extracted palette across backgrounds, headings, buttons, cards, and subtle accents.
+            </p>
+            <div class="mockup-btn-row">
+              <button type="button" class="mockup-btn-primary" id="mockup-primary-btn" data-i18n="mockupPrimaryBtn">Get Started</button>
+              <button type="button" class="mockup-btn-secondary" id="mockup-secondary-btn" data-i18n="mockupSecondaryBtn">Learn More</button>
+            </div>
+          </div>
+
+          <div class="mockup-right">
+            <div class="mockup-card" id="mockup-card">
+              <div class="mockup-card-header">
+                <h4 class="mockup-card-title" data-i18n="mockupCardTitle">Active Color Harmony</h4>
+                <span class="mockup-tag" data-i18n="mockupTag">Palette Verified</span>
+              </div>
+              <p class="mockup-card-desc" data-i18n="mockupCardDesc">Balanced light, dark, and vibrant accents derived directly from your image.</p>
+              <div class="mockup-metric-wrap">
+                <div class="mockup-metric-header">
+                  <span data-i18n="mockupMetricLabel">Color Harmony Score</span>
+                  <span data-i18n="mockupMetricValue">98.4%</span>
+                </div>
+                <div class="mockup-metric-track">
+                  <div class="mockup-metric-fill" id="mockup-metric-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-it-works-section" id="how-it-works-section">
+      <div class="app-container">
+        <div class="section-title-wrap" style="text-align: center; align-items: center;">
+          <h2 class="section-title" data-i18n="howItWorksTitle">How It Works</h2>
+          <p class="section-subtitle" data-i18n="howItWorksSubtitle">Simple, fast, and completely client-side in three easy steps.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number" data-i18n="step1Num">01</div>
+            <h3 class="step-title" data-i18n="step1Title">Upload</h3>
+            <p class="step-desc" data-i18n="step1Desc">Upload your image via drag-and-drop or file picker. Supports JPG, JPEG, PNG, and WEBP.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" data-i18n="step2Num">02</div>
+            <h3 class="step-title" data-i18n="step2Title">Analyze</h3>
+            <p class="step-desc" data-i18n="step2Desc">ColorExtract analyzes pixels and identifies meaningful colors using intelligent color quantization.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" data-i18n="step3Num">03</div>
+            <h3 class="step-title" data-i18n="step3Title">Get Your Palette</h3>
+            <p class="step-desc" data-i18n="step3Desc">Copy, download, or export your color palette in HEX, RGB, HSL, CSS, PNG, or JSON formats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT & PRIVACY SECTION -->
+    <section class="about-section" id="about-section">
+      <div class="app-container">
+        <div class="about-grid">
+          <div class="about-card">
+            <h3 class="about-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span data-i18n="aboutTitle">About ColorExtract</span>
+            </h3>
+            <p class="about-card-desc" data-i18n="aboutDesc">
+              ColorExtract is a modern image color extraction tool built for designers, content creators, developers, and digital artists. It runs advanced color clustering algorithms entirely inside your browser, giving you instant, beautiful palettes with zero server latency.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <h3 class="about-card-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span data-i18n="privacyTitle">Your Privacy Comes First</span>
+            </h3>
+            <p class="about-card-desc" data-i18n="privacyDesc">
+              Your photos and graphics are processed locally on your device. ColorExtract does not upload, transmit, or store your images on any remote server. Your creativity stays yours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="app-container footer-content">
+      <div class="footer-brand">
+        <span class="footer-brand-title" data-i18n="brandName">ColorExtract</span>
+        <span class="footer-tagline" data-i18n="footerTagline">ColorExtract — Extract colors. Create better designs.</span>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="#hero-section" class="footer-link" data-i18n="navHome">Home</a></li>
+        <li><a href="#how-it-works-section" class="footer-link" data-i18n="footerHowItWorks">How It Works</a></li>
+        <li><a href="#about-section" class="footer-link" data-i18n="footerAbout">About</a></li>
+        <li><a href="#about-section" class="footer-link" data-i18n="footerPrivacy">Privacy</a></li>
+      </ul>
+
+      <div class="footer-copyright">
+        &copy; 2026 ColorExtract. <span data-i18n="footerRights">All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EXPORT MODAL -->
+  <div class="modal-overlay" id="export-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title" data-i18n="exportModalTitle">Export Color Palette</h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-tabs">
+        <button type="button" class="export-tab-btn active" data-tab="css" data-i18n="tabCss">CSS Variables</button>
+        <button type="button" class="export-tab-btn" data-tab="json" data-i18n="tabJson">JSON</button>
+        <button type="button" class="export-tab-btn" data-tab="tailwind" data-i18n="tabTailwind">Tailwind CSS</button>
+        <button type="button" class="export-tab-btn" data-tab="txt" data-i18n="tabTxt">Plain Text</button>
+        <button type="button" class="export-tab-btn" data-tab="svg" data-i18n="tabSvg">SVG Vector</button>
+      </div>
+
+      <div class="modal-body">
+        <pre class="export-code-box" id="export-code-content"></pre>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="btn-copy-export-code">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span data-i18n="btnCopyCode">Copy Code</span>
+        </button>
+        <button type="button" class="btn-primary" id="btn-download-export-file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span data-i18n="btnDownloadFile">Download File</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST ALERT -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span id="toast-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </span>
+    <span id="toast-message" data-i18n="copied">Copied!</span>
+  </div>
+
+  <!-- ALL-IN-ONE BUNDLED SCRIPTS -->
+  <script>
+/**
+ * ColorExtract - Internationalization (i18n) Module
+ * Complete English and Arabic translations
+ */
+
+const translations = {
+  en: {
+    // Brand
+    brandName: "ColorExtract",
+    brandTagline: "Extract colors. Create better designs.",
+    
+    // Navigation
+    navHome: "Home",
+    navHowItWorks: "How It Works",
+    navPreview: "UI Preview",
+    navAbout: "About",
+    langName: "العربية",
+    themeDark: "Dark Mode",
+    themeLight: "Light Mode",
+    
+    // Hero
+    heroBadge: "100% In-Browser & Private",
+    heroTitle: "Extract Colors From Any Image 🎨",
+    heroSubtitle: "Upload an image and instantly discover its most important colors with HEX, RGB, and HSL values ready to use.",
+    btnUpload: "Upload Image",
+    dropzoneTitle: "Drop your image here, or browse",
+    dropzoneSubtitle: "Supports JPG, JPEG, PNG, WEBP (Max 25MB)",
+    dropzoneOr: "OR",
+    privacyNotice: "Your image is processed locally in your browser whenever possible.",
+    sampleImagesTitle: "Or try with an instant sample image:",
+    sampleSunset: "Sunset Coast",
+    sampleCyberpunk: "Cyberpunk City",
+    sampleNature: "Forest Fern",
+    sampleMinimal: "Warm Terracotta",
+    
+    // Image Preview & Controls
+    previewTitle: "Uploaded Image",
+    fileName: "File Name",
+    dimensions: "Dimensions",
+    fileSize: "Size",
+    btnReplace: "Replace Image",
+    btnRemove: "Remove",
+    optionsTitle: "Number of Colors to Extract",
+    colorCount3: "3 Colors",
+    colorCount5: "5 Colors",
+    colorCount8: "8 Colors",
+    colorCount10: "10 Colors",
+    colorCount20: "20 Colors",
+    colorCountAll: "All Colors",
+    allColorsBadge: "Dynamic Detection",
+    allColorsNote: "All Colors — Detect all meaningful colors in the image while automatically removing nearly identical shades.",
+    btnExtract: "Extract Colors",
+    btnExtracting: "Analyzing your image...",
+    
+    // Palette Section
+    paletteTitle: "Extracted Color Palette",
+    paletteSubtitle: "Click any color card to copy its HEX code instantly.",
+    colorsFound: "colors detected",
+    sortLabel: "Sort by:",
+    sortDominant: "Dominant",
+    sortBrightness: "Brightness",
+    sortHue: "Hue",
+    sortSaturation: "Saturation",
+    cardUsage: "Usage",
+    clickToCopy: "Click card to copy HEX",
+    copied: "Copied!",
+    copyHex: "Copy HEX",
+    copyRgb: "Copy RGB",
+    copyHsl: "Copy HSL",
+    btnDownloadPalette: "Download Palette",
+    btnExportOptions: "Export Options",
+    
+    // Gradient Section
+    gradientTitle: "Color Gradient",
+    gradientSubtitle: "Automatically generated gradient using your extracted colors.",
+    gradientLinear: "Linear",
+    gradientRadial: "Radial",
+    gradientConic: "Conic",
+    gradientAngle: "Angle",
+    btnCopyCss: "Copy CSS",
+    gradientCopied: "CSS Copied!",
+    
+    // Color Preview (UI Mockup)
+    previewSectionTitle: "Color Preview",
+    previewSectionSubtitle: "See how your extracted palette works inside a real user interface design.",
+    shuffleColors: "Shuffle Palette Roles",
+    mockupBadge: "Design System",
+    mockupHeading: "Build Beautiful Products",
+    mockupParagraph: "This interactive preview applies your extracted palette across backgrounds, headings, buttons, cards, and subtle accents.",
+    mockupPrimaryBtn: "Get Started",
+    mockupSecondaryBtn: "Learn More",
+    mockupCardTitle: "Active Color Harmony",
+    mockupCardDesc: "Balanced light, dark, and vibrant accents derived directly from your image.",
+    mockupMetricLabel: "Color Harmony Score",
+    mockupMetricValue: "98.4%",
+    mockupTag: "Palette Verified",
+    
+    // Export Modal
+    exportModalTitle: "Export Color Palette",
+    tabPng: "PNG Palette",
+    tabCss: "CSS Variables",
+    tabJson: "JSON",
+    tabTailwind: "Tailwind CSS",
+    tabTxt: "Plain Text",
+    tabSvg: "SVG Vector",
+    btnCopyCode: "Copy Code",
+    btnDownloadFile: "Download File",
+    closeModal: "Close",
+    
+    // How It Works
+    howItWorksTitle: "How It Works",
+    howItWorksSubtitle: "Simple, fast, and completely client-side in three easy steps.",
+    step1Num: "01",
+    step1Title: "Upload",
+    step1Desc: "Upload your image via drag-and-drop or file picker. Supports JPG, JPEG, PNG, and WEBP.",
+    step2Num: "02",
+    step2Title: "Analyze",
+    step2Desc: "ColorExtract analyzes pixels and identifies meaningful colors using intelligent color quantization.",
+    step3Num: "03",
+    step3Title: "Get Your Palette",
+    step3Desc: "Copy, download, or export your color palette in HEX, RGB, HSL, CSS, PNG, or JSON formats.",
+    
+    // About & Privacy
+    aboutTitle: "About ColorExtract",
+    aboutDesc: "ColorExtract is a modern image color extraction tool built for designers, content creators, developers, and digital artists. It runs advanced color clustering algorithms entirely inside your browser, giving you instant, beautiful palettes with zero server latency.",
+    privacyTitle: "Your Privacy Comes First",
+    privacyDesc: "Your photos and graphics are processed locally on your device. ColorExtract does not upload, transmit, or store your images on any remote server. Your creativity stays yours.",
+    
+    // Empty State
+    emptyStateTitle: "Upload an image to discover its colors.",
+    emptyStateDesc: "Drop any photo, illustration, or UI screenshot above to automatically generate a rich color palette.",
+    
+    // Errors & Alerts
+    errInvalidFormat: "Unsupported image format. Please upload a JPG, JPEG, PNG, or WEBP image.",
+    errTooLarge: "Image file is too large. Please upload an image under 25MB.",
+    errCorrupt: "Could not read this image file. It may be corrupted or unsupported.",
+    errExtraction: "An error occurred during color extraction. Please try another image.",
+    
+    // Footer
+    footerTagline: "ColorExtract — Extract colors. Create better designs.",
+    footerPrivacy: "Privacy",
+    footerAbout: "About",
+    footerHowItWorks: "How It Works",
+    footerContact: "Contact",
+    footerRights: "All rights reserved."
+  },
+
+  ar: {
+    // Brand
+    brandName: "ColorExtract",
+    brandTagline: "استخرج الألوان وصمّم بشكل أفضل.",
+    
+    // Navigation
+    navHome: "الرئيسية",
+    navHowItWorks: "كيف يعمل؟",
+    navPreview: "معاينة الواجهة",
+    navAbout: "حول الموقع",
+    langName: "English",
+    themeDark: "الوضع الليلي",
+    themeLight: "الوضع النهاري",
+    
+    // Hero
+    heroBadge: "100% داخل المتصفح وبخصوصية تامة",
+    heroTitle: "استخرج الألوان من أي صورة 🎨",
+    heroSubtitle: "ارفع أي صورة واكتشف أهم الألوان الموجودة فيها مع أكواد HEX وRGB وHSL جاهزة للاستخدام.",
+    btnUpload: "رفع صورة",
+    dropzoneTitle: "اسحب وأفلت صورتك هنا، أو تصفح الملفات",
+    dropzoneSubtitle: "يدعم صيغ JPG و JPEG و PNG و WEBP (بحد أقصى 25 ميجابايت)",
+    dropzoneOr: "أو",
+    privacyNotice: "تتم معالجة صورتك محليًا داخل المتصفح كلما أمكن ذلك.",
+    sampleImagesTitle: "أو جرب مباشرة بأحد النماذج الجاهزة:",
+    sampleSunset: "ساحل الغروب",
+    sampleCyberpunk: "مدينة سايبربانك",
+    sampleNature: "نباتات الغابة",
+    sampleMinimal: "طين التيراكوتا",
+    
+    // Image Preview & Controls
+    previewTitle: "الصورة المرفوعة",
+    fileName: "اسم الملف",
+    dimensions: "الأبعاد",
+    fileSize: "الحجم",
+    btnReplace: "استبدال الصورة",
+    btnRemove: "حذف",
+    optionsTitle: "عدد الألوان المطلوب استخراجها",
+    colorCount3: "3 ألوان",
+    colorCount5: "5 ألوان",
+    colorCount8: "8 ألوان",
+    colorCount10: "10 ألوان",
+    colorCount20: "20 لون",
+    colorCountAll: "كل الألوان",
+    allColorsBadge: "اكتشاف ديناميكي",
+    allColorsNote: "كل الألوان — اكتشف جميع الألوان المميزة في الصورة مع إزالة الدرجات المتشابهة جدًا تلقائيًا.",
+    btnExtract: "استخراج الألوان",
+    btnExtracting: "جاري تحليل الصورة...",
+    
+    // Palette Section
+    paletteTitle: "لوحة الألوان المستخرجة",
+    paletteSubtitle: "انقر على أي بطاقة لون لنسخ كود HEX مباشرة.",
+    colorsFound: "لون تم اكتشافه",
+    sortLabel: "ترتيب حسب:",
+    sortDominant: "الأكثر ظهورًا",
+    sortBrightness: "السطوع",
+    sortHue: "درجة اللون",
+    sortSaturation: "التشبع",
+    cardUsage: "النسبة",
+    clickToCopy: "انقر لنسخ كود HEX",
+    copied: "تم النسخ!",
+    copyHex: "نسخ HEX",
+    copyRgb: "نسخ RGB",
+    copyHsl: "نسخ HSL",
+    btnDownloadPalette: "تحميل لوحة الألوان",
+    btnExportOptions: "خيارات التصدير",
+    
+    // Gradient Section
+    gradientTitle: "تدرج الألوان",
+    gradientSubtitle: "تدرج لوني تم توليده تلقائيًا من ألوان صورتك المستخرجة.",
+    gradientLinear: "خطي",
+    gradientRadial: "دائري",
+    gradientConic: "مخروطي",
+    gradientAngle: "الزاوية",
+    btnCopyCss: "نسخ CSS",
+    gradientCopied: "تم نسخ CSS!",
+    
+    // Color Preview (UI Mockup)
+    previewSectionTitle: "معاينة الألوان",
+    previewSectionSubtitle: "شاهد كيف تبدو لوحة الألوان المستخرجة داخل واجهة مستخدم حقيقية.",
+    shuffleColors: "تبديل توزيع الألوان",
+    mockupBadge: "نظام التصميم",
+    mockupHeading: "ابنِ منتجات بتصاميم استثنائية",
+    mockupParagraph: "تطبق هذه المعاينة التفاعلية لوحة الألوان المستخرجة عبر الخلفيات والعناوين والأزرار والبطاقات والتفاصيل الدقيقة.",
+    mockupPrimaryBtn: "ابدأ الآن",
+    mockupSecondaryBtn: "اكتشف المزيد",
+    mockupCardTitle: "تناسق الألوان المستخرجة",
+    mockupCardDesc: "ألوان فاتحة وداكنة ولمسات حيوية متناسقة تم استخلاصها مباشرة من صورتك.",
+    mockupMetricLabel: "نسبة تناسق الألوان",
+    mockupMetricValue: "98.4%",
+    mockupTag: "لوحة متناسقة",
+    
+    // Export Modal
+    exportModalTitle: "تصدير لوحة الألوان",
+    tabPng: "صورة PNG",
+    tabCss: "متغيرات CSS",
+    tabJson: "ملف JSON",
+    tabTailwind: "تنسيق Tailwind",
+    tabTxt: "نص عادي TXT",
+    tabSvg: "فيكتور SVG",
+    btnCopyCode: "نسخ الكود",
+    btnDownloadFile: "تحميل الملف",
+    closeModal: "إغلاق",
+    
+    // How It Works
+    howItWorksTitle: "كيف يعمل؟",
+    howItWorksSubtitle: "بسيط، فائق السرعة، ويعمل بالكامل داخل متصفحك في 3 خطوات سهلة.",
+    step1Num: "01",
+    step1Title: "ارفع الصورة",
+    step1Desc: "ارفع صورتك عبر السحب والإفلات أو اختيار الملف. يدعم JPG و JPEG و PNG و WEBP.",
+    step2Num: "02",
+    step2Title: "حلل الصورة",
+    step2Desc: "يقوم ColorExtract بتحليل بيكسلات الصورة واكتشاف الألوان المهمة باستخدام خوارزميات التجميع الذكية.",
+    step3Num: "03",
+    step3Title: "احصل على لوحة الألوان",
+    step3Desc: "انسخ أو حمّل أو صدّر لوحة الألوان الخاصة بك بصيغ متعددة مثل HEX و RGB و HSL و CSS و PNG و JSON.",
+    
+    // About & Privacy
+    aboutTitle: "حول ColorExtract",
+    aboutDesc: "ColorExtract أداة حديثة ومصممة خصيصًا للمصممين والمطورين وصناع المحتوى والفنانين الرقميين. تعمل بخوارزميات متقدمة لتجميع الألوان مباشرة داخل متصفحك، مما يمنحك لوحات ألوان دقيقة وفورية دون أي تأخير من السيرفر.",
+    privacyTitle: "خصوصيتك تأتي دائمًا أولاً",
+    privacyDesc: "تتم معالجة صورك وتصميماتك محليًا على جهازك بالكامل. لا يقوم ColorExtract برفع أو إرسال أو تخزين صورك على أي سيرفر خارجي. إبداعك يبقى دائمًا ملكك.",
+    
+    // Empty State
+    emptyStateTitle: "ارفع صورة لاكتشاف ألوانها.",
+    emptyStateDesc: "اسحب وأفلت أي صورة أو رسم أو لقطة شاشة بالأعلى لتوليد لوحة ألوان مخصصة واحترافية.",
+    
+    // Errors & Alerts
+    errInvalidFormat: "صيغة الصورة غير مدعومة. يرجى رفع صورة بصيغة JPG أو JPEG أو PNG أو WEBP.",
+    errTooLarge: "حجم الصورة كبير جدًا. يرجى اختيار صورة يقل حجمها عن 25 ميجابايت.",
+    errCorrupt: "تعذر قراءة ملف الصورة. قد يكون الملف تالفًا أو غير مدعوم.",
+    errExtraction: "حدث خطأ أثناء استخراج الألوان. يرجى تجربة صورة أخرى.",
+    
+    // Footer
+    footerTagline: "ColorExtract — استخرج الألوان وصمّم بشكل أفضل.",
+    footerPrivacy: "الخصوصية",
+    footerAbout: "حول الموقع",
+    footerHowItWorks: "كيف يعمل؟",
+    footerContact: "تواصل معنا",
+    footerRights: "جميع الحقوق محفوظة."
+  }
+};
+
+class I18nManager {
+  constructor() {
+    // Load persisted language or default to browser language or 'en'
+    const saved = localStorage.getItem('colorextract_lang');
+    if (saved && (saved === 'en' || saved === 'ar')) {
+      this.currentLang = saved;
+    } else {
+      const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      this.currentLang = browserLang.startsWith('ar') ? 'ar' : 'en';
+    }
+    this.listeners = [];
+  }
+
+  getLang() {
+    return this.currentLang;
+  }
+
+  isRtl() {
+    return this.currentLang === 'ar';
+  }
+
+  setLang(lang) {
+    if (lang !== 'en' && lang !== 'ar') return;
+    this.currentLang = lang;
+    localStorage.setItem('colorextract_lang', lang);
+    this.applyToDOM();
+    this.notifyListeners();
+  }
+
+  toggleLang() {
+    this.setLang(this.currentLang === 'en' ? 'ar' : 'en');
+  }
+
+  t(key) {
+    return (translations[this.currentLang] && translations[this.currentLang][key]) || 
+           (translations['en'] && translations['en'][key]) || 
+           key;
+  }
+
+  onLanguageChange(callback) {
+    this.listeners.push(callback);
+  }
+
+  notifyListeners() {
+    this.listeners.forEach(cb => {
+      try { cb(this.currentLang); } catch (e) { console.error(e); }
+    });
+  }
+
+  applyToDOM() {
+    const html = document.documentElement;
+    const isAr = this.currentLang === 'ar';
+    
+    html.lang = this.currentLang;
+    html.dir = isAr ? 'rtl' : 'ltr';
+    if (isAr) {
+      document.body.classList.add('rtl-layout');
+    } else {
+      document.body.classList.remove('rtl-layout');
+    }
+
+    // Update all elements with data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const translation = this.t(key);
+      if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) {
+        el.value = translation;
+      } else {
+        el.textContent = translation;
+      }
+    });
+
+    // Update all elements with data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.placeholder = this.t(key);
+    });
+
+    // Update all elements with data-i18n-title
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      el.title = this.t(key);
+    });
+
+    // Update document title
+    document.title = `${this.t('brandName')} — ${this.t('heroTitle')}`;
+  }
+}
+
+// Global instance
+window.i18n = new I18nManager();
+
+/**
+ * ColorExtract - Advanced Image Color Extraction Engine
+ * Uses HTML5 Canvas, Median Cut Quantization, CIE-Lab Delta-E Clustering,
+ * and Dynamic Adaptive Color Extraction for "All Colors" mode.
+ */
+
+class ColorExtractor {
+  constructor() {
+    this.colorNames = [
+      { name: "Black", r: 0, g: 0, b: 0 },
+      { name: "Charcoal", r: 40, g: 40, b: 45 },
+      { name: "Onyx", r: 25, g: 25, b: 28 },
+      { name: "Gunmetal", r: 42, g: 52, b: 57 },
+      { name: "Jet", r: 52, g: 52, b: 52 },
+      { name: "White", r: 255, g: 255, b: 255 },
+      { name: "Snow", r: 250, g: 250, b: 255 },
+      { name: "Ivory", r: 255, g: 255, b: 240 },
+      { name: "Eggshell", r: 240, g: 234, b: 214 },
+      { name: "Alabaster", r: 242, g: 240, b: 235 },
+      { name: "Silver", r: 192, g: 192, b: 192 },
+      { name: "Light Gray", r: 211, g: 211, b: 211 },
+      { name: "Slate Gray", r: 112, g: 128, b: 144 },
+      { name: "Dim Gray", r: 105, g: 105, b: 105 },
+      { name: "Ash Gray", r: 178, g: 190, b: 181 },
+      { name: "Crimson", r: 220, g: 20, b: 60 },
+      { name: "Scarlet", r: 255, g: 36, b: 0 },
+      { name: "Ruby Red", r: 155, g: 17, b: 30 },
+      { name: "Burgundy", r: 128, g: 0, b: 32 },
+      { name: "Maroon", r: 128, g: 0, b: 0 },
+      { name: "Wine", r: 114, g: 47, b: 55 },
+      { name: "Rose", r: 255, g: 0, b: 127 },
+      { name: "Coral Red", r: 255, g: 64, b: 64 },
+      { name: "Salmon", r: 250, g: 128, b: 114 },
+      { name: "Terracotta", r: 204, g: 78, b: 92 },
+      { name: "Flamingo Pink", r: 252, g: 142, b: 172 },
+      { name: "Blush", r: 222, g: 93, b: 131 },
+      { name: "Hot Pink", r: 255, g: 105, b: 180 },
+      { name: "Magenta", r: 255, g: 0, b: 255 },
+      { name: "Fuchsia", r: 255, g: 0, b: 255 },
+      { name: "Mauve", r: 224, g: 176, b: 255 },
+      { name: "Orange", r: 255, g: 128, b: 0 },
+      { name: "Tangerine", r: 242, g: 133, b: 0 },
+      { name: "Amber", r: 255, g: 191, b: 0 },
+      { name: "Burnt Orange", r: 204, g: 85, b: 0 },
+      { name: "Rust", r: 183, g: 65, b: 14 },
+      { name: "Peach", r: 255, g: 218, b: 185 },
+      { name: "Apricot", r: 251, g: 206, b: 177 },
+      { name: "Gold", r: 255, g: 215, b: 0 },
+      { name: "Yellow", r: 255, g: 255, b: 0 },
+      { name: "Lemon", r: 253, g: 233, b: 16 },
+      { name: "Mustard", r: 255, g: 219, b: 88 },
+      { name: "Cream", r: 255, g: 253, b: 208 },
+      { name: "Beige", r: 245, g: 245, b: 220 },
+      { name: "Sand", r: 194, g: 178, b: 128 },
+      { name: "Khaki", r: 195, g: 176, b: 145 },
+      { name: "Caramel", r: 175, g: 111, b: 9 },
+      { name: "Tan", r: 210, g: 180, b: 140 },
+      { name: "Copper", r: 184, g: 115, b: 51 },
+      { name: "Bronze", r: 205, g: 127, b: 50 },
+      { name: "Sienna", r: 160, g: 82, b: 45 },
+      { name: "Sepia", r: 112, g: 66, b: 20 },
+      { name: "Chocolate", r: 123, g: 63, b: 0 },
+      { name: "Chestnut", r: 149, g: 69, b: 53 },
+      { name: "Espresso", r: 75, g: 54, b: 33 },
+      { name: "Lime Green", r: 50, g: 205, b: 50 },
+      { name: "Olive", r: 128, g: 128, b: 0 },
+      { name: "Emerald", r: 80, g: 200, b: 120 },
+      { name: "Mint", r: 152, g: 255, b: 152 },
+      { name: "Sage", r: 158, g: 170, b: 139 },
+      { name: "Forest Green", r: 34, g: 139, b: 34 },
+      { name: "Pine Green", r: 1, g: 121, b: 111 },
+      { name: "Sea Green", r: 46, g: 139, b: 87 },
+      { name: "Jade", r: 0, g: 168, b: 107 },
+      { name: "Moss Green", r: 138, g: 154, b: 91 },
+      { name: "Army Green", r: 75, g: 83, b: 32 },
+      { name: "Teal", r: 0, g: 128, b: 128 },
+      { name: "Cyan", r: 0, g: 255, b: 255 },
+      { name: "Aqua", r: 0, g: 255, b: 255 },
+      { name: "Turquoise", r: 64, g: 224, b: 208 },
+      { name: "Sky Blue", r: 135, g: 206, b: 235 },
+      { name: "Cerulean", r: 0, g: 123, b: 167 },
+      { name: "Steel Blue", r: 70, g: 130, b: 180 },
+      { name: "Ocean Blue", r: 0, g: 105, b: 148 },
+      { name: "Cornflower Blue", r: 100, g: 149, b: 237 },
+      { name: "Royal Blue", r: 65, g: 105, b: 225 },
+      { name: "Navy Blue", r: 0, g: 0, b: 128 },
+      { name: "Midnight Blue", r: 25, g: 25, b: 112 },
+      { name: "Cobalt", r: 0, g: 71, b: 171 },
+      { name: "Indigo", r: 75, g: 0, b: 130 },
+      { name: "Deep Purple", r: 90, g: 0, b: 120 },
+      { name: "Violet", r: 127, g: 0, b: 255 },
+      { name: "Lavender", r: 230, g: 230, b: 250 },
+      { name: "Plum", r: 142, g: 69, b: 133 },
+      { name: "Lilac", r: 200, g: 162, b: 200 },
+      { name: "Amethyst", r: 153, g: 102, b: 204 }
+    ];
+  }
+
+  /**
+   * Helper: RGB to HEX string (#RRGGBB)
+   */
+  rgbToHex(r, g, b) {
+    const toHex = c => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+  }
+
+  /**
+   * Helper: HEX to RGB object
+   */
+  hexToRgb(hex) {
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c + c).join('');
+    }
+    const num = parseInt(hex, 16);
+    return {
+      r: (num >> 16) & 255,
+      g: (num >> 8) & 255,
+      b: num & 255
+    };
+  }
+
+  /**
+   * Helper: RGB to HSL { h: [0-360], s: [0-100], l: [0-100] }
+   */
+  rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    return {
+      h: Math.round(h * 360),
+      s: Math.round(s * 100),
+      l: Math.round(l * 100)
+    };
+  }
+
+  /**
+   * Perceived brightness: 0 to 255
+   */
+  getBrightness(r, g, b) {
+    return Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+  }
+
+  /**
+   * Determine whether text on this background should be dark or white
+   */
+  getContrastTextColor(r, g, b) {
+    // Relative luminance
+    const lum = 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
+    return lum > 0.52 ? "#0f172a" : "#ffffff";
+  }
+
+  /**
+   * RGB to CIE-XYZ (D65 standard illuminant)
+   */
+  rgbToXyz(r, g, b) {
+    let sR = r / 255;
+    let sG = g / 255;
+    let sB = b / 255;
+
+    sR = sR > 0.04045 ? Math.pow((sR + 0.055) / 1.055, 2.4) : sR / 12.92;
+    sG = sG > 0.04045 ? Math.pow((sG + 0.055) / 1.055, 2.4) : sG / 12.92;
+    sB = sB > 0.04045 ? Math.pow((sB + 0.055) / 1.055, 2.4) : sB / 12.92;
+
+    sR *= 100;
+    sG *= 100;
+    sB *= 100;
+
+    const x = sR * 0.4124564 + sG * 0.3575761 + sB * 0.1804375;
+    const y = sR * 0.2126729 + sG * 0.7151522 + sB * 0.0721750;
+    const z = sR * 0.0193339 + sG * 0.1191920 + sB * 0.9503041;
+    return { x, y, z };
+  }
+
+  /**
+   * XYZ to CIE-Lab
+   */
+  xyzToLab(x, y, z) {
+    // Reference white point D65
+    const refX = 95.047;
+    const refY = 100.000;
+    const refZ = 108.883;
+
+    let varX = x / refX;
+    let varY = y / refY;
+    let varZ = z / refZ;
+
+    const f = val => val > 0.008856 ? Math.cbrt(val) : (7.787 * val) + (16 / 116);
+
+    varX = f(varX);
+    varY = f(varY);
+    varZ = f(varZ);
+
+    return {
+      L: (116 * varY) - 16,
+      a: 500 * (varX - varY),
+      b: 200 * (varY - varZ)
+    };
+  }
+
+  /**
+   * RGB to CIE-Lab direct
+   */
+  rgbToLab(r, g, b) {
+    const xyz = this.rgbToXyz(r, g, b);
+    return this.xyzToLab(xyz.x, xyz.y, xyz.z);
+  }
+
+  /**
+   * CIE76 Color Difference (Delta E) in Lab space
+   * Delta E < 2.3 = just noticeable difference
+   * Delta E < 10 = very visually similar shade
+   * Delta E > 20 = clearly distinct color
+   */
+  deltaE(lab1, lab2) {
+    const dL = lab1.L - lab2.L;
+    const da = lab1.a - lab2.a;
+    const db = lab1.b - lab2.b;
+    return Math.sqrt(dL * dL + da * da + db * db);
+  }
+
+  /**
+   * Find closest recognized human-readable color name
+   */
+  getClosestColorName(r, g, b) {
+    let minDistance = Infinity;
+    let bestName = "Accent Color";
+
+    for (const item of this.colorNames) {
+      // Euclidean distance in RGB with human eye weights
+      const dr = (r - item.r) * 0.3;
+      const dg = (g - item.g) * 0.59;
+      const db = (b - item.b) * 0.11;
+      const dist = dr * dr + dg * dg + db * db;
+      if (dist < minDistance) {
+        minDistance = dist;
+        bestName = item.name;
+      }
+    }
+    return bestName;
+  }
+
+  /**
+   * Extract image pixels onto an efficient downscaled canvas
+   * @param {HTMLImageElement} image
+   * @returns {Promise<{pixels: Array<{r,g,b}>, totalPixels: number}>}
+   */
+  async getPixelsFromImage(image) {
+    return new Promise((resolve, reject) => {
+      try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+        // Maintain aspect ratio, max dimension 250px for ultra-fast, smooth calculation
+        const maxDim = 250;
+        let w = image.naturalWidth || image.width;
+        let h = image.naturalHeight || image.height;
+
+        if (!w || !h) {
+          reject(new Error("Invalid image dimensions"));
+          return;
+        }
+
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+
+        canvas.width = w;
+        canvas.height = h;
+        ctx.drawImage(image, 0, 0, w, h);
+
+        const imgData = ctx.getImageData(0, 0, w, h).data;
+        const pixels = [];
+
+        for (let i = 0; i < imgData.length; i += 4) {
+          const a = imgData[i + 3];
+          // Skip transparent or near-transparent pixels
+          if (a < 128) continue;
+
+          pixels.push({
+            r: imgData[i],
+            g: imgData[i + 1],
+            b: imgData[i + 2]
+          });
+        }
+
+        if (pixels.length === 0) {
+          reject(new Error("Image contains only transparent pixels."));
+          return;
+        }
+
+        resolve({ pixels, totalPixels: pixels.length });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  /**
+   * Median Cut Quantization for fixed count palettes (3, 5, 8, 10, 20)
+   */
+  medianCut(pixels, targetCount) {
+    if (pixels.length <= targetCount) {
+      return pixels.map(p => ({
+        r: p.r,
+        g: p.g,
+        b: p.b,
+        count: 1
+      }));
+    }
+
+    // Helper: Find channel with largest range in box
+    const getWidestRangeChannel = (box) => {
+      let minR = 255, maxR = 0;
+      let minG = 255, maxG = 0;
+      let minB = 255, maxB = 0;
+
+      for (let i = 0; i < box.length; i++) {
+        const p = box[i];
+        if (p.r < minR) minR = p.r;
+        if (p.r > maxR) maxR = p.r;
+        if (p.g < minG) minG = p.g;
+        if (p.g > maxG) maxG = p.g;
+        if (p.b < minB) minB = p.b;
+        if (p.b > maxB) maxB = p.b;
+      }
+
+      const rangeR = maxR - minR;
+      const rangeG = maxG - minG;
+      const rangeB = maxB - minB;
+
+      if (rangeR >= rangeG && rangeR >= rangeB) return 'r';
+      if (rangeG >= rangeR && rangeG >= rangeB) return 'g';
+      return 'b';
+    };
+
+    // Split queue
+    let boxes = [pixels];
+
+    while (boxes.length < targetCount) {
+      // Find the box with largest variance or largest pixel count
+      let largestBoxIndex = -1;
+      let largestBoxScore = -1;
+
+      for (let i = 0; i < boxes.length; i++) {
+        if (boxes[i].length <= 1) continue;
+        const box = boxes[i];
+        const channel = getWidestRangeChannel(box);
+        
+        let minVal = 255, maxVal = 0;
+        for (const p of box) {
+          const val = p[channel];
+          if (val < minVal) minVal = val;
+          if (val > maxVal) maxVal = val;
+        }
+        // Score combines channel spread and population
+        const score = (maxVal - minVal) * Math.sqrt(box.length);
+        if (score > largestBoxScore) {
+          largestBoxScore = score;
+          largestBoxIndex = i;
+        }
+      }
+
+      if (largestBoxIndex === -1) break; // Cannot split further
+
+      const boxToSplit = boxes.splice(largestBoxIndex, 1)[0];
+      const channel = getWidestRangeChannel(boxToSplit);
+
+      // Sort by the chosen channel
+      boxToSplit.sort((a, b) => a[channel] - b[channel]);
+
+      const medianIdx = Math.floor(boxToSplit.length / 2);
+      boxes.push(boxToSplit.slice(0, medianIdx));
+      boxes.push(boxToSplit.slice(medianIdx));
+    }
+
+    // Compute centroid and pixel count for each box
+    const results = boxes.map(box => {
+      let sumR = 0, sumG = 0, sumB = 0;
+      for (const p of box) {
+        sumR += p.r;
+        sumG += p.g;
+        sumB += p.b;
+      }
+      const count = box.length;
+      return {
+        r: Math.round(sumR / count),
+        g: Math.round(sumG / count),
+        b: Math.round(sumB / count),
+        count: count
+      };
+    });
+
+    return results;
+  }
+
+  /**
+   * "All Colors" Extraction:
+   * Dynamically analyzes the entire image, groups visually similar colors using
+   * perceptual Lab Delta-E clustering, eliminates trivial noise, and preserves
+   * all distinct meaningful shades without hardcoded limits.
+   */
+  extractAllMeaningfulColors(pixels, totalPixels) {
+    // Step 1: Quantize pixels into 5-bit color buckets (32x32x32 = 32768 possible buckets)
+    // to group minor sub-pixel variations while keeping rich tones intact
+    const buckets = new Map();
+
+    for (let i = 0; i < pixels.length; i++) {
+      const p = pixels[i];
+      // 5 bits per channel (shift right 3)
+      const qR = p.r >> 3;
+      const qG = p.g >> 3;
+      const qB = p.b >> 3;
+      const key = (qR << 10) | (qG << 5) | qB;
+
+      let bucket = buckets.get(key);
+      if (!bucket) {
+        bucket = { sumR: 0, sumG: 0, sumB: 0, count: 0 };
+        buckets.set(key, bucket);
+      }
+      bucket.sumR += p.r;
+      bucket.sumG += p.g;
+      bucket.sumB += p.b;
+      bucket.count++;
+    }
+
+    // Step 2: Filter out trivial noise
+    // Keep buckets that have at least 0.05% of valid pixels or min 4 occurrences
+    const minThreshold = Math.max(4, Math.floor(totalPixels * 0.0005));
+    const candidates = [];
+
+    buckets.forEach(bucket => {
+      if (bucket.count >= minThreshold) {
+        const r = Math.round(bucket.sumR / bucket.count);
+        const g = Math.round(bucket.sumG / bucket.count);
+        const b = Math.round(bucket.sumB / bucket.count);
+        const lab = this.rgbToLab(r, g, b);
+        candidates.push({ r, g, b, lab, count: bucket.count });
+      }
+    });
+
+    // Step 3: Sort candidates by frequency descending (most dominant first)
+    candidates.sort((a, b) => b.count - a.count);
+
+    // Step 4: Perceptual agglomerative clustering using CIE-Lab Delta E
+    // In human vision, Delta E < 13.5 groups very close shades of the same color
+    // while preserving distinct colors (e.g. sky blue vs deep blue vs navy).
+    const clusters = [];
+    const MERGE_DELTA_E = 13.5;
+
+    for (const candidate of candidates) {
+      let matchedCluster = null;
+      let minDelta = Infinity;
+
+      for (const cluster of clusters) {
+        const dE = this.deltaE(candidate.lab, cluster.lab);
+        if (dE < MERGE_DELTA_E && dE < minDelta) {
+          minDelta = dE;
+          matchedCluster = cluster;
+        }
+      }
+
+      if (matchedCluster) {
+        // Merge into existing cluster: update weighted average
+        const totalCount = matchedCluster.count + candidate.count;
+        matchedCluster.r = Math.round((matchedCluster.r * matchedCluster.count + candidate.r * candidate.count) / totalCount);
+        matchedCluster.g = Math.round((matchedCluster.g * matchedCluster.count + candidate.g * candidate.count) / totalCount);
+        matchedCluster.b = Math.round((matchedCluster.b * matchedCluster.count + candidate.b * candidate.count) / totalCount);
+        matchedCluster.count = totalCount;
+        matchedCluster.lab = this.rgbToLab(matchedCluster.r, matchedCluster.g, matchedCluster.b);
+      } else {
+        // Create new distinct meaningful color cluster
+        clusters.push({
+          r: candidate.r,
+          g: candidate.g,
+          b: candidate.b,
+          lab: candidate.lab,
+          count: candidate.count
+        });
+      }
+    }
+
+    // Step 5: Clean up any secondary overlaps that may have formed after centroid updates
+    const finalColors = [];
+    clusters.sort((a, b) => b.count - a.count);
+
+    for (const cl of clusters) {
+      let isDuplicate = false;
+      for (const fc of finalColors) {
+        if (this.deltaE(cl.lab, fc.lab) < 10.0) {
+          // Merge into the already kept higher-frequency color
+          fc.count += cl.count;
+          isDuplicate = true;
+          break;
+        }
+      }
+      if (!isDuplicate) {
+        finalColors.push(cl);
+      }
+    }
+
+    return finalColors;
+  }
+
+  /**
+   * Main Public API: Extract colors from an image
+   * @param {HTMLImageElement} image
+   * @param {number|string} countOption - 3, 5, 8, 10, 20 or "all"
+   * @returns {Promise<Array<ColorObject>>}
+   */
+  async extract(image, countOption = 5) {
+    const { pixels, totalPixels } = await this.getPixelsFromImage(image);
+
+    let rawPalette = [];
+
+    if (countOption === 'all' || countOption === 'All' || countOption === -1) {
+      // Dynamic adaptive "All Colors" algorithm
+      rawPalette = this.extractAllMeaningfulColors(pixels, totalPixels);
+    } else {
+      // Fixed count extraction with Median Cut
+      const targetCount = parseInt(countOption, 10) || 5;
+      rawPalette = this.medianCut(pixels, targetCount);
+    }
+
+    // Calculate sum of counts in returned palette to normalize percentages
+    const paletteTotalCount = rawPalette.reduce((acc, curr) => acc + curr.count, 0) || totalPixels;
+
+    // Build rich color data objects
+    const processedColors = rawPalette.map((item, idx) => {
+      const hex = this.rgbToHex(item.r, item.g, item.b);
+      const rgb = { r: item.r, g: item.g, b: item.b };
+      const hsl = this.rgbToHsl(item.r, item.g, item.b);
+      const brightness = this.getBrightness(item.r, item.g, item.b);
+      const contrastText = this.getContrastTextColor(item.r, item.g, item.b);
+      const percentage = Math.max(0.1, Number(((item.count / paletteTotalCount) * 100).toFixed(1)));
+      const name = this.getClosestColorName(item.r, item.g, item.b);
+
+      return {
+        id: `color-${idx}-${hex.replace('#', '')}`,
+        hex,
+        rgb,
+        hsl,
+        brightness,
+        contrastText,
+        percentage,
+        count: item.count,
+        name
+      };
+    });
+
+    // Default sorting: Dominant (highest percentage first)
+    return this.sortColors(processedColors, 'dominant');
+  }
+
+  /**
+   * Sort color list by criteria
+   * @param {Array} colors
+   * @param {'dominant'|'brightness'|'hue'|'saturation'} criteria
+   * @param {boolean} ascending
+   */
+  sortColors(colors, criteria = 'dominant', ascending = false) {
+    const list = [...colors];
+
+    switch (criteria) {
+      case 'dominant':
+        list.sort((a, b) => b.percentage - a.percentage);
+        break;
+      case 'brightness':
+        list.sort((a, b) => b.brightness - a.brightness);
+        break;
+      case 'hue':
+        list.sort((a, b) => a.hsl.h - b.hsl.h);
+        break;
+      case 'saturation':
+        list.sort((a, b) => b.hsl.s - a.hsl.s);
+        break;
+      default:
+        list.sort((a, b) => b.percentage - a.percentage);
+    }
+
+    if (ascending) {
+      list.reverse();
+    }
+
+    return list;
+  }
+}
+
+// Global instance
+window.colorExtractor = new ColorExtractor();
+
+/**
+ * ColorExtract - Export Manager
+ * Handles PNG Palette generation, CSS variables, JSON, Tailwind, TXT, and SVG exports.
+ */
+
+class PaletteExporter {
+  constructor() {}
+
+  /**
+   * Generates a high-resolution, beautifully branded PNG palette image
+   * @param {Array} colors - array of extracted color objects
+   * @param {string} imageName - original file name
+   * @param {HTMLImageElement|null} originalImage - image element for thumbnail
+   * @returns {Promise<Blob>}
+   */
+  async generatePngPalette(colors, imageName = "palette", originalImage = null) {
+    return new Promise((resolve) => {
+      const isArabic = window.i18n ? window.i18n.isRtl() : false;
+      const count = colors.length;
+      
+      // Determine canvas dimensions based on color count
+      const cols = count <= 5 ? count : count <= 10 ? 5 : count <= 20 ? 5 : 6;
+      const rows = Math.ceil(count / cols);
+
+      const cardWidth = 220;
+      const cardHeight = 240;
+      const padding = 60;
+      const gap = 24;
+      const headerHeight = 130;
+      const footerHeight = 70;
+
+      const canvasWidth = Math.max(1200, padding * 2 + cols * cardWidth + (cols - 1) * gap);
+      const canvasHeight = padding * 2 + headerHeight + rows * cardHeight + (rows - 1) * gap + footerHeight;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      const ctx = canvas.getContext('2d');
+
+      // High quality rendering
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // 1. Background (Dark elegant SaaS card style)
+      ctx.fillStyle = "#0c1322";
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+      // Subtle gradient accent glow on background
+      const bgGrad = ctx.createLinearGradient(0, 0, canvasWidth, canvasHeight);
+      bgGrad.addColorStop(0, "rgba(99, 102, 241, 0.08)");
+      bgGrad.addColorStop(0.5, "rgba(168, 85, 247, 0.04)");
+      bgGrad.addColorStop(1, "rgba(59, 130, 246, 0.08)");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+      // Subtle border line
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, canvasWidth - 2, canvasHeight - 2);
+
+      // 2. Header Area
+      const headerY = padding;
+
+      // ColorExtract Logo Badge
+      // Draw modern palette icon
+      ctx.fillStyle = "#6366f1";
+      this._drawRoundedRect(ctx, padding, headerY, 44, 44, 12);
+      ctx.fill();
+
+      // Icon dots
+      const dotColors = ["#ffffff", "#f43f5e", "#10b981", "#f59e0b"];
+      const dotPositions = [
+        [padding + 16, headerY + 16],
+        [padding + 28, headerY + 16],
+        [padding + 16, headerY + 28],
+        [padding + 28, headerY + 28]
+      ];
+      dotColors.forEach((color, i) => {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(dotPositions[i][0], dotPositions[i][1], 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Brand Title
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 26px 'Plus Jakarta Sans', Inter, -apple-system, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("ColorExtract", padding + 56, headerY + 28);
+
+      // Brand Subtitle
+      ctx.fillStyle = "#94a3b8";
+      ctx.font = "14px 'Plus Jakarta Sans', Inter, -apple-system, sans-serif";
+      ctx.fillText("Automated Visual Color Palette • colorextract.app", padding + 56, headerY + 48);
+
+      // Image Info on Right Side
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#e2e8f0";
+      ctx.font = "bold 16px 'Plus Jakarta Sans', Inter, -apple-system, sans-serif";
+      const displayFileName = imageName.length > 32 ? imageName.substring(0, 29) + "..." : imageName;
+      ctx.fillText(displayFileName, canvasWidth - padding, headerY + 26);
+
+      ctx.fillStyle = "#64748b";
+      ctx.font = "13px 'Plus Jakarta Sans', Inter, -apple-system, sans-serif";
+      const dateStr = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+      ctx.fillText(`${count} Colors Detected • ${dateStr}`, canvasWidth - padding, headerY + 46);
+
+      // Divider Line
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding, headerY + 70);
+      ctx.lineTo(canvasWidth - padding, headerY + 70);
+      ctx.stroke();
+
+      // 3. Grid of Color Swatches
+      const gridStartY = headerY + 95;
+      const actualGridWidth = cols * cardWidth + (cols - 1) * gap;
+      const gridOffsetX = padding + (canvasWidth - padding * 2 - actualGridWidth) / 2;
+
+      colors.forEach((c, idx) => {
+        const col = idx % cols;
+        const row = Math.floor(idx / cols);
+        const x = gridOffsetX + col * (cardWidth + gap);
+        const y = gridStartY + row * (cardHeight + gap);
+
+        // Card Container background
+        ctx.fillStyle = "#162032";
+        this._drawRoundedRect(ctx, x, y, cardWidth, cardHeight, 16);
+        ctx.fill();
+
+        // Card subtle outline
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Swatch Pill / Box
+        const swatchH = 110;
+        ctx.save();
+        this._drawRoundedRect(ctx, x + 8, y + 8, cardWidth - 16, swatchH, 12);
+        ctx.clip();
+        ctx.fillStyle = c.hex;
+        ctx.fillRect(x + 8, y + 8, cardWidth - 16, swatchH);
+
+        // Top right percentage badge inside swatch
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+        this._drawRoundedRect(ctx, x + cardWidth - 68, y + 14, 52, 22, 6);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 11px Inter, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(`${c.percentage}%`, x + cardWidth - 42, y + 29);
+        ctx.restore();
+
+        // Color Details under swatch
+        const textStartY = y + swatchH + 30;
+
+        // HEX Code (Bold)
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 18px 'SF Mono', Consolas, monospace";
+        ctx.fillText(c.hex, x + 16, textStartY);
+
+        // Color Name Tag
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "12px 'Plus Jakarta Sans', Inter, sans-serif";
+        ctx.fillText(c.name || "Color", x + 16, textStartY + 20);
+
+        // RGB
+        ctx.fillStyle = "#64748b";
+        ctx.font = "12px 'SF Mono', Consolas, monospace";
+        ctx.fillText(`RGB: ${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b}`, x + 16, textStartY + 42);
+
+        // HSL
+        ctx.fillText(`HSL: ${c.hsl.h}°, ${c.hsl.s}%, ${c.hsl.l}%`, x + 16, textStartY + 62);
+      });
+
+      // 4. Footer Area
+      const footerY = canvasHeight - padding + 15;
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#475569";
+      ctx.font = "13px 'Plus Jakarta Sans', Inter, sans-serif";
+      ctx.fillText("ColorExtract — Extract Colors From Any Image • Designed for Web & Creative Professionals", canvasWidth / 2, footerY);
+
+      canvas.toBlob((blob) => {
+        resolve(blob);
+      }, 'image/png');
+    });
+  }
+
+  /**
+   * Helper: Draw rounded rectangle path
+   */
+  _drawRoundedRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  /**
+   * Generate CSS Variables
+   */
+  generateCssVariables(colors) {
+    let css = `/* ColorExtract Palette Variables */\n:root {\n`;
+    colors.forEach((c, idx) => {
+      const varName = `--color-${idx + 1}`;
+      css += `  ${varName}: ${c.hex}; /* ${c.name} - ${c.percentage}% */\n`;
+      css += `  ${varName}-rgb: ${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b};\n`;
+      css += `  ${varName}-hsl: ${c.hsl.h}, ${c.hsl.s}%, ${c.hsl.l}%;\n`;
+    });
+    css += `}\n`;
+    return css;
+  }
+
+  /**
+   * Generate JSON Output
+   */
+  generateJson(colors, imageName = "image") {
+    const data = {
+      source: "ColorExtract",
+      image: imageName,
+      extractedAt: new Date().toISOString(),
+      totalColors: colors.length,
+      palette: colors.map((c, idx) => ({
+        index: idx + 1,
+        hex: c.hex,
+        rgb: {
+          r: c.rgb.r,
+          g: c.rgb.g,
+          b: c.rgb.b,
+          formatted: `rgb(${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b})`
+        },
+        hsl: {
+          h: c.hsl.h,
+          s: c.hsl.s,
+          l: c.hsl.l,
+          formatted: `hsl(${c.hsl.h}, ${c.hsl.s}%, ${c.hsl.l}%)`
+        },
+        percentage: c.percentage,
+        name: c.name,
+        brightness: c.brightness
+      }))
+    };
+    return JSON.stringify(data, null, 2);
+  }
+
+  /**
+   * Generate Tailwind Config snippet
+   */
+  generateTailwind(colors) {
+    let output = `// tailwind.config.js snippet\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        palette: {\n`;
+    colors.forEach((c, idx) => {
+      const key = (idx + 1) * 100;
+      output += `          '${key}': '${c.hex}', // ${c.name} (${c.percentage}%)\n`;
+    });
+    output += `        }\n      }\n    }\n  }\n};\n`;
+    return output;
+  }
+
+  /**
+   * Generate Plain Text (TXT)
+   */
+  generateTxt(colors, imageName = "image") {
+    let txt = `ColorExtract - Palette for "${imageName}"\n`;
+    txt += `Extracted on: ${new Date().toLocaleString()}\n`;
+    txt += `Total Colors: ${colors.length}\n`;
+    txt += `---------------------------------------------------------\n`;
+    txt += `No.  HEX      RGB               HSL                Usage%  Name\n`;
+    txt += `---------------------------------------------------------\n`;
+
+    colors.forEach((c, idx) => {
+      const num = String(idx + 1).padEnd(4, ' ');
+      const hex = c.hex.padEnd(9, ' ');
+      const rgb = `${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b}`.padEnd(18, ' ');
+      const hsl = `${c.hsl.h}°, ${c.hsl.s}%, ${c.hsl.l}%`.padEnd(19, ' ');
+      const pct = `${c.percentage}%`.padEnd(8, ' ');
+      txt += `${num} ${hex} ${rgb} ${hsl} ${pct} ${c.name}\n`;
+    });
+
+    return txt;
+  }
+
+  /**
+   * Generate SVG vector palette
+   */
+  generateSvg(colors) {
+    const cardW = 120;
+    const cardH = 140;
+    const gap = 16;
+    const pad = 30;
+    const totalW = pad * 2 + colors.length * cardW + (colors.length - 1) * gap;
+    const totalH = pad * 2 + cardH;
+
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${totalH}" width="${totalW}" height="${totalH}">\n`;
+    svg += `  <style>\n`;
+    svg += `    .hex { font-family: monospace; font-size: 13px; font-weight: bold; fill: #0f172a; }\n`;
+    svg += `    .sub { font-family: sans-serif; font-size: 10px; fill: #64748b; }\n`;
+    svg += `  </style>\n`;
+    svg += `  <rect width="100%" height="100%" fill="#ffffff" rx="12"/>\n`;
+
+    colors.forEach((c, idx) => {
+      const x = pad + idx * (cardW + gap);
+      const y = pad;
+      svg += `  <g transform="translate(${x}, ${y})">\n`;
+      svg += `    <rect width="${cardW}" height="90" fill="${c.hex}" rx="8"/>\n`;
+      svg += `    <text x="0" y="112" class="hex">${c.hex}</text>\n`;
+      svg += `    <text x="0" y="128" class="sub">${c.percentage}% • ${c.name}</text>\n`;
+      svg += `  </g>\n`;
+    });
+
+    svg += `</svg>`;
+    return svg;
+  }
+
+  /**
+   * Helper: Trigger file download in browser
+   */
+  downloadFile(content, fileName, mimeType) {
+    const blob = content instanceof Blob ? content : new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  /**
+   * Helper: Copy text to clipboard
+   */
+  async copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+    // Fallback for older environments
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const success = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    return success;
+  }
+}
+
+// Global instance
+window.paletteExporter = new PaletteExporter();
+
+/**
+ * ColorExtract - Preset Sample Images Generator
+ * Generates rich, authentic procedural graphic canvases as test images
+ * so users can immediately test the extraction algorithms with 1 click.
+ */
+
+class SampleImageGenerator {
+  constructor() {
+    this.cache = new Map();
+  }
+
+  /**
+   * Generates a sample image data URL
+   * @param {'sunset'|'cyberpunk'|'nature'|'minimal'} type
+   * @returns {string} data URL
+   */
+  getSample(type) {
+    if (this.cache.has(type)) {
+      return this.cache.get(type);
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 640;
+    canvas.height = 440;
+    const ctx = canvas.getContext('2d');
+
+    switch (type) {
+      case 'sunset':
+        this._renderSunset(ctx, 640, 440);
+        break;
+      case 'cyberpunk':
+        this._renderCyberpunk(ctx, 640, 440);
+        break;
+      case 'nature':
+        this._renderNature(ctx, 640, 440);
+        break;
+      case 'minimal':
+        this._renderMinimal(ctx, 640, 440);
+        break;
+      default:
+        this._renderSunset(ctx, 640, 440);
+    }
+
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+    this.cache.set(type, dataUrl);
+    return dataUrl;
+  }
+
+  _renderSunset(ctx, w, h) {
+    // Sky gradient
+    const sky = ctx.createLinearGradient(0, 0, 0, h * 0.7);
+    sky.addColorStop(0, '#2b0938');
+    sky.addColorStop(0.3, '#7928ca');
+    sky.addColorStop(0.6, '#ff4b4b');
+    sky.addColorStop(0.85, '#ff9f1c');
+    sky.addColorStop(1, '#ffe49e');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    // Glowing Sun
+    ctx.save();
+    const sunGrad = ctx.createRadialGradient(w * 0.5, h * 0.52, 10, w * 0.5, h * 0.52, 140);
+    sunGrad.addColorStop(0, '#ffffff');
+    sunGrad.addColorStop(0.2, '#fff176');
+    sunGrad.addColorStop(0.6, 'rgba(255, 112, 67, 0.8)');
+    sunGrad.addColorStop(1, 'rgba(255, 61, 0, 0)');
+    ctx.fillStyle = sunGrad;
+    ctx.beginPath();
+    ctx.arc(w * 0.5, h * 0.52, 140, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Ocean Water
+    const sea = ctx.createLinearGradient(0, h * 0.65, 0, h);
+    sea.addColorStop(0, '#102a43');
+    sea.addColorStop(0.4, '#0b1d3a');
+    sea.addColorStop(1, '#050c1a');
+    ctx.fillStyle = sea;
+    ctx.fillRect(0, h * 0.65, w, h * 0.35);
+
+    // Water Sun Reflection
+    ctx.fillStyle = 'rgba(255, 183, 77, 0.45)';
+    for (let y = h * 0.66; y < h; y += 8) {
+      const spread = (y - h * 0.65) * 1.8;
+      ctx.fillRect(w * 0.5 - spread / 2, y, spread, 3);
+    }
+
+    // Distant Island / Mountain Silhouette
+    ctx.fillStyle = '#1c0f24';
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.65);
+    ctx.lineTo(w * 0.25, h * 0.56);
+    ctx.lineTo(w * 0.45, h * 0.62);
+    ctx.lineTo(w * 0.65, h * 0.54);
+    ctx.lineTo(w * 0.88, h * 0.63);
+    ctx.lineTo(w, h * 0.65);
+    ctx.lineTo(w, h * 0.7);
+    ctx.lineTo(0, h * 0.7);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  _renderCyberpunk(ctx, w, h) {
+    // Dark neon backdrop
+    const bg = ctx.createLinearGradient(0, 0, w, h);
+    bg.addColorStop(0, '#0a0a14');
+    bg.addColorStop(0.5, '#120d29');
+    bg.addColorStop(1, '#050814');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Grid perspective
+    ctx.strokeStyle = 'rgba(0, 245, 212, 0.2)';
+    ctx.lineWidth = 1.5;
+    for (let x = 0; x <= w; x += 40) {
+      ctx.beginPath();
+      ctx.moveTo(x, h * 0.6);
+      ctx.lineTo(w * 0.5 + (x - w * 0.5) * 2.2, h);
+      ctx.stroke();
+    }
+    for (let y = h * 0.6; y <= h; y += 24) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+
+    // Neon Skyscrapers
+    const buildings = [
+      { x: 30, w: 70, h: 260, color: '#ff007f' },
+      { x: 120, w: 90, h: 320, color: '#7b2cbf' },
+      { x: 230, w: 110, h: 370, color: '#00f5d4' },
+      { x: 360, w: 85, h: 290, color: '#fee440' },
+      { x: 460, w: 100, h: 340, color: '#ff007f' },
+      { x: 575, w: 60, h: 250, color: '#00bbf9' }
+    ];
+
+    buildings.forEach(b => {
+      // Silhouette
+      ctx.fillStyle = '#0f1123';
+      ctx.fillRect(b.x, h * 0.6 - b.h * 0.6, b.w, b.h * 0.6 + 50);
+
+      // Neon outline
+      ctx.strokeStyle = b.color;
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(b.x, h * 0.6 - b.h * 0.6, b.w, b.h * 0.6 + 50);
+
+      // Windows
+      ctx.fillStyle = b.color;
+      for (let wx = b.x + 10; wx < b.x + b.w - 10; wx += 14) {
+        for (let wy = h * 0.6 - b.h * 0.6 + 15; wy < h * 0.6 + 20; wy += 22) {
+          if (Math.sin(wx * wy) > -0.3) {
+            ctx.fillRect(wx, wy, 6, 9);
+          }
+        }
+      }
+    });
+
+    // Glowing Neon Moon
+    ctx.save();
+    const moonGrad = ctx.createRadialGradient(w * 0.8, h * 0.22, 10, w * 0.8, h * 0.22, 90);
+    moonGrad.addColorStop(0, '#fee440');
+    moonGrad.addColorStop(0.4, '#ff007f');
+    moonGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = moonGrad;
+    ctx.beginPath();
+    ctx.arc(w * 0.8, h * 0.22, 90, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  _renderNature(ctx, w, h) {
+    // Lush botanical forest gradient
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#022c22');
+    bg.addColorStop(0.4, '#064e3b');
+    bg.addColorStop(0.8, '#065f46');
+    bg.addColorStop(1, '#022c22');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Fern / Leaf shapes
+    const leaves = [
+      { x: w * 0.2, y: h * 0.75, r: 180, angle: -0.6, color: '#10b981' },
+      { x: w * 0.45, y: h * 0.85, r: 240, angle: -0.2, color: '#059669' },
+      { x: w * 0.75, y: h * 0.7, r: 210, angle: 0.5, color: '#34d399' },
+      { x: w * 0.35, y: h * 0.45, r: 150, angle: 0.1, color: '#6ee7b7' },
+      { x: w * 0.6, y: h * 0.35, r: 130, angle: -0.4, color: '#a7f3d0' }
+    ];
+
+    leaves.forEach(leaf => {
+      ctx.save();
+      ctx.translate(leaf.x, leaf.y);
+      ctx.rotate(leaf.angle);
+
+      ctx.fillStyle = leaf.color;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, leaf.r * 0.4, leaf.r * 0.9, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Leaf veins
+      ctx.strokeStyle = '#022c22';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, -leaf.r * 0.85);
+      ctx.lineTo(0, leaf.r * 0.85);
+      ctx.stroke();
+
+      ctx.restore();
+    });
+
+    // Sun dappled light circles
+    ctx.fillStyle = 'rgba(254, 240, 138, 0.25)';
+    const spots = [
+      [120, 100, 60],
+      [480, 140, 80],
+      [280, 220, 95],
+      [560, 320, 70]
+    ];
+    spots.forEach(([x, y, r]) => {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  _renderMinimal(ctx, w, h) {
+    // Warm Terracotta / Mediterranean architectural shapes
+    ctx.fillStyle = '#fffbeb';
+    ctx.fillRect(0, 0, w, h);
+
+    // Warm Clay Arch
+    ctx.fillStyle = '#c2410c';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.15, h);
+    ctx.lineTo(w * 0.15, h * 0.35);
+    ctx.arc(w * 0.38, h * 0.35, w * 0.23, Math.PI, 0);
+    ctx.lineTo(w * 0.61, h);
+    ctx.closePath();
+    ctx.fill();
+
+    // Terracotta inner shade
+    ctx.fillStyle = '#9a3412';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.25, h);
+    ctx.lineTo(w * 0.25, h * 0.42);
+    ctx.arc(w * 0.38, h * 0.42, w * 0.13, Math.PI, 0);
+    ctx.lineTo(w * 0.51, h);
+    ctx.closePath();
+    ctx.fill();
+
+    // Baked mustard sun disc
+    ctx.fillStyle = '#eab308';
+    ctx.beginPath();
+    ctx.arc(w * 0.78, h * 0.3, 75, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Sage botanical stem
+    ctx.strokeStyle = '#4d7c0f';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.72, h);
+    ctx.quadraticCurveTo(w * 0.7, h * 0.65, w * 0.75, h * 0.45);
+    ctx.stroke();
+
+    // Olive leaves
+    ctx.fillStyle = '#65a30d';
+    for (let i = 0; i < 5; i++) {
+      const y = h * (0.85 - i * 0.08);
+      const side = i % 2 === 0 ? 1 : -1;
+      ctx.beginPath();
+      ctx.ellipse(w * 0.73 + side * 22, y, 18, 9, side * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// Global instance
+window.sampleGenerator = new SampleImageGenerator();
+
+/**
+ * ColorExtract - Main Application Logic
+ * Orchestrates upload, extraction, UI rendering, sorting, gradients,
+ * UI mockup preview, exporting, theme switching, and localization.
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Application State
+  const state = {
+    imageFile: null,
+    imageElement: null,
+    fileName: "",
+    fileSize: "",
+    dimensions: "",
+    colorCount: "5", // '3', '5', '8', '10', '20', or 'all'
+    extractedColors: [],
+    sortedColors: [],
+    currentSort: "dominant",
+    gradientAngle: 135,
+    gradientType: "linear",
+    theme: "dark",
+    uiPreviewOffset: 0
+  };
+
+  // DOM Elements
+  const elements = {
+    // Theme & Lang
+    themeToggleBtn: document.getElementById('theme-toggle-btn'),
+    themeIcon: document.getElementById('theme-icon'),
+    langToggleBtn: document.getElementById('lang-toggle-btn'),
+    mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+    mobileNav: document.getElementById('mobile-nav'),
+
+    // Hero & Upload
+    heroSection: document.getElementById('hero-section'),
+    heroUploadBtn: document.getElementById('hero-upload-btn'),
+    dropzone: document.getElementById('dropzone'),
+    fileInput: document.getElementById('file-input'),
+    sampleButtons: document.querySelectorAll('.sample-btn'),
+
+    // Image Preview & Options
+    previewSection: document.getElementById('preview-section'),
+    previewImg: document.getElementById('preview-img'),
+    previewFileName: document.getElementById('preview-filename'),
+    previewDimensions: document.getElementById('preview-dimensions'),
+    previewSize: document.getElementById('preview-size'),
+    btnReplaceImage: document.getElementById('btn-replace-image'),
+    btnRemoveImage: document.getElementById('btn-remove-image'),
+    countOptions: document.querySelectorAll('.count-option-btn'),
+    allColorsNote: document.getElementById('all-colors-note'),
+    btnExtractColors: document.getElementById('btn-extract-colors'),
+    extractSpinner: document.getElementById('extract-spinner'),
+    extractBtnText: document.getElementById('extract-btn-text'),
+
+    // Palette Section
+    paletteSection: document.getElementById('palette-section'),
+    colorsCountBadge: document.getElementById('colors-count-badge'),
+    sortSelect: document.getElementById('sort-select'),
+    paletteGrid: document.getElementById('palette-grid'),
+    btnDownloadPalette: document.getElementById('btn-download-palette'),
+    btnOpenExportModal: document.getElementById('btn-open-export-modal'),
+
+    // Gradient Section
+    gradientSection: document.getElementById('gradient-section'),
+    gradientBox: document.getElementById('gradient-box'),
+    gradientAngleSlider: document.getElementById('gradient-angle-slider'),
+    gradientAngleValue: document.getElementById('gradient-angle-value'),
+    gradientTypeButtons: document.querySelectorAll('.gradient-type-btn'),
+    btnCopyGradientCss: document.getElementById('btn-copy-gradient-css'),
+    gradientCodeDisplay: document.getElementById('gradient-code-display'),
+
+    // UI Mockup Preview
+    previewMockupSection: document.getElementById('preview-mockup-section'),
+    btnShuffleMockup: document.getElementById('btn-shuffle-mockup'),
+    mockupContainer: document.getElementById('mockup-container'),
+    mockupBadge: document.getElementById('mockup-badge'),
+    mockupHeading: document.getElementById('mockup-heading'),
+    mockupPrimaryBtn: document.getElementById('mockup-primary-btn'),
+    mockupSecondaryBtn: document.getElementById('mockup-secondary-btn'),
+    mockupCard: document.getElementById('mockup-card'),
+    mockupMetricBar: document.getElementById('mockup-metric-bar'),
+
+    // Export Modal
+    exportModal: document.getElementById('export-modal'),
+    modalBackdrop: document.getElementById('modal-backdrop'),
+    modalCloseBtn: document.getElementById('modal-close-btn'),
+    exportTabs: document.querySelectorAll('.export-tab-btn'),
+    exportCodeContent: document.getElementById('export-code-content'),
+    btnCopyExportCode: document.getElementById('btn-copy-export-code'),
+    btnDownloadExportFile: document.getElementById('btn-download-export-file'),
+
+    // Toast Alert
+    toast: document.getElementById('toast'),
+    toastMessage: document.getElementById('toast-message'),
+    toastIcon: document.getElementById('toast-icon')
+  };
+
+  let activeExportTab = 'css';
+  let toastTimeout = null;
+
+  // Initialize App
+  init();
+
+  function init() {
+    initTheme();
+    initI18n();
+    bindEvents();
+  }
+
+  // --- THEME MANAGEMENT ---
+  function initTheme() {
+    const savedTheme = localStorage.getItem('colorextract_theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    state.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    applyTheme(state.theme);
+  }
+
+  function applyTheme(theme) {
+    state.theme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('colorextract_theme', theme);
+
+    if (elements.themeIcon) {
+      if (theme === 'dark') {
+        // Moon icon / show sun to switch to light
+        elements.themeIcon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+      } else {
+        // Sun icon / show moon to switch to dark
+        elements.themeIcon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      }
+    }
+  }
+
+  function toggleTheme() {
+    applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+  }
+
+  // --- I18N MANAGEMENT ---
+  function initI18n() {
+    window.i18n.applyToDOM();
+    updateLangButtonText();
+
+    window.i18n.onLanguageChange(() => {
+      updateLangButtonText();
+      if (state.sortedColors.length > 0) {
+        renderPaletteGrid(state.sortedColors);
+        updateColorsCountBadge();
+        updateMockupPreview();
+        updateExportView();
+      }
+    });
+  }
+
+  function updateLangButtonText() {
+    if (elements.langToggleBtn) {
+      const isAr = window.i18n.isRtl();
+      // If currently Arabic, button shows English, and vice versa
+      elements.langToggleBtn.querySelector('.lang-label').textContent = isAr ? 'English' : 'العربية';
+    }
+  }
+
+  // --- EVENT BINDINGS ---
+  function bindEvents() {
+    // Theme Toggle
+    elements.themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Language Toggle
+    elements.langToggleBtn.addEventListener('click', () => {
+      window.i18n.toggleLang();
+    });
+
+    // Mobile Menu Toggle
+    if (elements.mobileMenuBtn && elements.mobileNav) {
+      elements.mobileMenuBtn.addEventListener('click', () => {
+        elements.mobileNav.classList.toggle('open');
+      });
+
+      // Close mobile menu on clicking any link
+      elements.mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          elements.mobileNav.classList.remove('open');
+        });
+      });
+    }
+
+    // Hero Upload Button
+    elements.heroUploadBtn.addEventListener('click', () => {
+      elements.fileInput.click();
+    });
+
+    // Dropzone Click
+    elements.dropzone.addEventListener('click', () => {
+      elements.fileInput.click();
+    });
+
+    // File Input Change
+    elements.fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    // Drag & Drop
+    ['dragenter', 'dragover'].forEach(eventName => {
+      elements.dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        elements.dropzone.classList.add('drag-active');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      elements.dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        elements.dropzone.classList.remove('drag-active');
+      });
+    });
+
+    elements.dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+
+    // Preset Sample Images
+    elements.sampleButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const sampleType = btn.getAttribute('data-sample');
+        loadSampleImage(sampleType);
+      });
+    });
+
+    // Replace Image Button
+    elements.btnReplaceImage.addEventListener('click', () => {
+      elements.fileInput.click();
+    });
+
+    // Remove Image Button
+    elements.btnRemoveImage.addEventListener('click', resetAppToEmptyState);
+
+    // Color Count Options
+    elements.countOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.countOptions.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.colorCount = btn.getAttribute('data-count');
+
+        // Show/hide all colors note
+        if (state.colorCount === 'all') {
+          elements.allColorsNote.classList.remove('hidden');
+        } else {
+          elements.allColorsNote.classList.add('hidden');
+        }
+
+        // If an image is already loaded, automatically re-extract!
+        if (state.imageElement) {
+          performColorExtraction();
+        }
+      });
+    });
+
+    // Extract Colors Button
+    elements.btnExtractColors.addEventListener('click', performColorExtraction);
+
+    // Sorting Dropdown
+    elements.sortSelect.addEventListener('change', (e) => {
+      state.currentSort = e.target.value;
+      if (state.extractedColors.length > 0) {
+        state.sortedColors = window.colorExtractor.sortColors(state.extractedColors, state.currentSort);
+        renderPaletteGrid(state.sortedColors);
+      }
+    });
+
+    // Download Palette Button
+    elements.btnDownloadPalette.addEventListener('click', handleDownloadPalettePng);
+
+    // Open Export Modal
+    elements.btnOpenExportModal.addEventListener('click', openExportModal);
+
+    // Modal Close
+    elements.modalCloseBtn.addEventListener('click', closeExportModal);
+    elements.modalBackdrop.addEventListener('click', closeExportModal);
+
+    // Modal Export Tabs
+    elements.exportTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        elements.exportTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeExportTab = tab.getAttribute('data-tab');
+        updateExportView();
+      });
+    });
+
+    // Copy Export Code
+    elements.btnCopyExportCode.addEventListener('click', handleCopyExportCode);
+
+    // Download Export File
+    elements.btnDownloadExportFile.addEventListener('click', handleDownloadExportFile);
+
+    // Gradient Angle Slider
+    elements.gradientAngleSlider.addEventListener('input', (e) => {
+      state.gradientAngle = parseInt(e.target.value, 10);
+      elements.gradientAngleValue.textContent = `${state.gradientAngle}°`;
+      updateGradientPreview();
+    });
+
+    // Gradient Type Buttons
+    elements.gradientTypeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.gradientTypeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.gradientType = btn.getAttribute('data-type');
+        
+        // Show/hide angle slider if radial or conic
+        if (state.gradientType === 'radial') {
+          elements.gradientAngleSlider.parentElement.style.opacity = '0.3';
+          elements.gradientAngleSlider.disabled = true;
+        } else {
+          elements.gradientAngleSlider.parentElement.style.opacity = '1';
+          elements.gradientAngleSlider.disabled = false;
+        }
+        updateGradientPreview();
+      });
+    });
+
+    // Copy Gradient CSS
+    elements.btnCopyGradientCss.addEventListener('click', handleCopyGradientCss);
+
+    // Shuffle Mockup Colors
+    elements.btnShuffleMockup.addEventListener('click', () => {
+      state.uiPreviewOffset = (state.uiPreviewOffset + 1) % Math.max(1, state.sortedColors.length);
+      updateMockupPreview();
+      showToast(window.i18n.t('shuffleColors'), 'info');
+    });
+
+    // Keyboard support: Escape closes modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && elements.exportModal.classList.contains('active')) {
+        closeExportModal();
+      }
+    });
+  }
+
+  // --- FILE HANDLING & VALIDATION ---
+  function handleFileSelect(file) {
+    // 1. Validate File Format
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type.toLowerCase())) {
+      showToast(window.i18n.t('errInvalidFormat'), 'error');
+      return;
+    }
+
+    // 2. Validate File Size (Max 25MB)
+    const maxSize = 25 * 1024 * 1024;
+    if (file.size > maxSize) {
+      showToast(window.i18n.t('errTooLarge'), 'error');
+      return;
+    }
+
+    state.imageFile = file;
+    state.fileName = file.name;
+    state.fileSize = formatFileSize(file.size);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        state.imageElement = img;
+        state.dimensions = `${img.naturalWidth} × ${img.naturalHeight} px`;
+        displayImagePreview(img.src);
+        performColorExtraction();
+      };
+      img.onerror = () => {
+        showToast(window.i18n.t('errCorrupt'), 'error');
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = () => {
+      showToast(window.i18n.t('errCorrupt'), 'error');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function loadSampleImage(sampleType) {
+    const dataUrl = window.sampleGenerator.getSample(sampleType);
+    const sampleNames = {
+      sunset: window.i18n.t('sampleSunset') + ".jpg",
+      cyberpunk: window.i18n.t('sampleCyberpunk') + ".jpg",
+      nature: window.i18n.t('sampleNature') + ".jpg",
+      minimal: window.i18n.t('sampleMinimal') + ".jpg"
+    };
+
+    state.fileName = sampleNames[sampleType] || `${sampleType}.jpg`;
+    state.fileSize = "180 KB";
+
+    const img = new Image();
+    img.onload = () => {
+      state.imageElement = img;
+      state.dimensions = `${img.naturalWidth} × ${img.naturalHeight} px`;
+      displayImagePreview(img.src);
+      performColorExtraction();
+    };
+    img.src = dataUrl;
+  }
+
+  function displayImagePreview(src) {
+    elements.previewImg.src = src;
+    elements.previewFileName.textContent = state.fileName;
+    elements.previewDimensions.textContent = state.dimensions;
+    elements.previewSize.textContent = state.fileSize;
+
+    elements.dropzone.classList.add('hidden');
+    elements.previewSection.classList.remove('hidden');
+  }
+
+  function resetAppToEmptyState() {
+    state.imageFile = null;
+    state.imageElement = null;
+    state.extractedColors = [];
+    state.sortedColors = [];
+    elements.fileInput.value = "";
+
+    elements.previewSection.classList.add('hidden');
+    elements.paletteSection.classList.add('hidden');
+    elements.gradientSection.classList.add('hidden');
+    elements.previewMockupSection.classList.add('hidden');
+    elements.dropzone.classList.remove('hidden');
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+  // --- COLOR EXTRACTION ---
+  async function performColorExtraction() {
+    if (!state.imageElement) return;
+
+    // Show loading state
+    elements.btnExtractColors.disabled = true;
+    elements.extractSpinner.classList.remove('hidden');
+    elements.extractBtnText.textContent = window.i18n.t('btnExtracting');
+
+    try {
+      // Small tick for smooth UI repaint
+      await new Promise(r => setTimeout(r, 60));
+
+      const colors = await window.colorExtractor.extract(state.imageElement, state.colorCount);
+      state.extractedColors = colors;
+      state.sortedColors = window.colorExtractor.sortColors(colors, state.currentSort);
+
+      // Render all modules
+      renderPaletteGrid(state.sortedColors);
+      updateColorsCountBadge();
+      updateGradientPreview();
+      updateMockupPreview();
+
+      // Reveal sections
+      elements.paletteSection.classList.remove('hidden');
+      elements.gradientSection.classList.remove('hidden');
+      elements.previewMockupSection.classList.remove('hidden');
+
+    } catch (err) {
+      console.error(err);
+      showToast(window.i18n.t('errExtraction'), 'error');
+    } finally {
+      elements.btnExtractColors.disabled = false;
+      elements.extractSpinner.classList.add('hidden');
+      elements.extractBtnText.textContent = window.i18n.t('btnExtract');
+    }
+  }
+
+  function updateColorsCountBadge() {
+    const count = state.sortedColors.length;
+    elements.colorsCountBadge.textContent = `${count} ${window.i18n.t('colorsFound')}`;
+  }
+
+  // --- PALETTE GRID RENDERING ---
+  function renderPaletteGrid(colors) {
+    elements.paletteGrid.innerHTML = '';
+
+    colors.forEach((color, idx) => {
+      const card = document.createElement('div');
+      card.className = 'color-card';
+      card.style.animationDelay = `${idx * 0.03}s`;
+
+      card.innerHTML = `
+        <div class="color-swatch-box" style="background-color: ${color.hex}">
+          <div class="swatch-copy-hint">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>${window.i18n.t('clickToCopy')}</span>
+          </div>
+          <div class="swatch-percentage-pill">${color.percentage}%</div>
+        </div>
+        <div class="color-details">
+          <div class="color-header">
+            <span class="color-hex">${color.hex}</span>
+            <span class="color-name-tag">${color.name}</span>
+          </div>
+          <div class="color-metrics">
+            <div class="metric-row">
+              <span class="metric-label">RGB:</span>
+              <span class="metric-value font-mono">${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">HSL:</span>
+              <span class="metric-value font-mono">${color.hsl.h}°, ${color.hsl.s}%, ${color.hsl.l}%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">${window.i18n.t('cardUsage')}:</span>
+              <div class="metric-usage-bar-wrap">
+                <div class="metric-usage-bar" style="width: ${Math.min(100, color.percentage)}%; background-color: ${color.hex}"></div>
+              </div>
+              <span class="metric-value font-mono">${color.percentage}%</span>
+            </div>
+          </div>
+          <div class="color-actions">
+            <button type="button" class="btn-copy-format" data-copy="${color.hex}" title="${window.i18n.t('copyHex')}">
+              HEX
+            </button>
+            <button type="button" class="btn-copy-format" data-copy="rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})" title="${window.i18n.t('copyRgb')}">
+              RGB
+            </button>
+            <button type="button" class="btn-copy-format" data-copy="hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)" title="${window.i18n.t('copyHsl')}">
+              HSL
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Click card to copy HEX
+      card.addEventListener('click', (e) => {
+        // If clicked on specific action button, handled by that button
+        if (e.target.closest('.btn-copy-format')) return;
+        copyTextWithToast(color.hex);
+        card.classList.add('copy-pulse');
+        setTimeout(() => card.classList.remove('copy-pulse'), 400);
+      });
+
+      // Individual copy buttons
+      card.querySelectorAll('.btn-copy-format').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const val = btn.getAttribute('data-copy');
+          copyTextWithToast(val);
+        });
+      });
+
+      elements.paletteGrid.appendChild(card);
+    });
+  }
+
+  // --- GRADIENT SECTION ---
+  function updateGradientPreview() {
+    if (state.sortedColors.length === 0) return;
+
+    // Use top 2 to 4 dominant colors
+    const sliceCount = Math.min(4, Math.max(2, state.sortedColors.length));
+    const gradientColors = state.sortedColors.slice(0, sliceCount).map(c => c.hex);
+
+    let cssGrad = "";
+    if (state.gradientType === 'linear') {
+      cssGrad = `linear-gradient(${state.gradientAngle}deg, ${gradientColors.join(', ')})`;
+    } else if (state.gradientType === 'radial') {
+      cssGrad = `radial-gradient(circle at center, ${gradientColors.join(', ')})`;
+    } else if (state.gradientType === 'conic') {
+      cssGrad = `conic-gradient(from ${state.gradientAngle}deg at 50% 50%, ${gradientColors.join(', ')}, ${gradientColors[0]})`;
+    }
+
+    elements.gradientBox.style.background = cssGrad;
+    elements.gradientCodeDisplay.textContent = `background: ${cssGrad};`;
+  }
+
+  function handleCopyGradientCss() {
+    const css = elements.gradientCodeDisplay.textContent;
+    copyTextWithToast(css, window.i18n.t('gradientCopied'));
+  }
+
+  // --- UI MOCKUP PREVIEW ---
+  function updateMockupPreview() {
+    if (state.sortedColors.length === 0) return;
+
+    const colors = state.sortedColors;
+    const len = colors.length;
+    const offset = state.uiPreviewOffset;
+
+    // Intelligently pick colors for UI roles
+    const primary = colors[offset % len];
+    const secondary = colors[(offset + 1) % len];
+    const tertiary = colors[(offset + 2) % len];
+    const quaternary = colors[(offset + 3) % len];
+
+    // Background card
+    elements.mockupContainer.style.borderColor = primary.hex + '33';
+
+    // Badge
+    elements.mockupBadge.style.backgroundColor = primary.hex + '20';
+    elements.mockupBadge.style.color = primary.hex;
+    elements.mockupBadge.style.borderColor = primary.hex + '40';
+
+    // Primary Button
+    elements.mockupPrimaryBtn.style.backgroundColor = primary.hex;
+    elements.mockupPrimaryBtn.style.color = primary.contrastText;
+    elements.mockupPrimaryBtn.style.boxShadow = `0 4px 14px ${primary.hex}50`;
+
+    // Secondary Button
+    elements.mockupSecondaryBtn.style.borderColor = secondary.hex;
+    elements.mockupSecondaryBtn.style.color = secondary.hex;
+
+    // Stat / Feature Card
+    elements.mockupCard.style.borderColor = tertiary.hex + '40';
+    elements.mockupCard.style.backgroundColor = state.theme === 'dark' ? '#0f172a' : '#f8fafc';
+    
+    // Metric Progress Bar
+    elements.mockupMetricBar.style.backgroundColor = quaternary.hex;
+  }
+
+  // --- PALETTE DOWNLOAD (PNG) ---
+  async function handleDownloadPalettePng() {
+    if (state.sortedColors.length === 0) return;
+
+    elements.btnDownloadPalette.disabled = true;
+    const originalText = elements.btnDownloadPalette.innerHTML;
+    elements.btnDownloadPalette.innerHTML = `<span class="spinner-small"></span> Generating...`;
+
+    try {
+      const blob = await window.paletteExporter.generatePngPalette(
+        state.sortedColors,
+        state.fileName || "palette",
+        state.imageElement
+      );
+
+      const cleanName = (state.fileName || "palette").replace(/\.[^/.]+$/, "");
+      window.paletteExporter.downloadFile(blob, `ColorExtract-${cleanName}-palette.png`, 'image/png');
+      showToast(window.i18n.t('copied'), 'success');
+    } catch (err) {
+      console.error(err);
+      showToast("Download failed", 'error');
+    } finally {
+      elements.btnDownloadPalette.disabled = false;
+      elements.btnDownloadPalette.innerHTML = originalText;
+    }
+  }
+
+  // --- EXPORT MODAL ---
+  function openExportModal() {
+    if (state.sortedColors.length === 0) return;
+    updateExportView();
+    elements.exportModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeExportModal() {
+    elements.exportModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function updateExportView() {
+    const colors = state.sortedColors;
+    const cleanName = (state.fileName || "palette").replace(/\.[^/.]+$/, "");
+    let output = "";
+
+    switch (activeExportTab) {
+      case 'css':
+        output = window.paletteExporter.generateCssVariables(colors);
+        break;
+      case 'json':
+        output = window.paletteExporter.generateJson(colors, cleanName);
+        break;
+      case 'tailwind':
+        output = window.paletteExporter.generateTailwind(colors);
+        break;
+      case 'txt':
+        output = window.paletteExporter.generateTxt(colors, cleanName);
+        break;
+      case 'svg':
+        output = window.paletteExporter.generateSvg(colors);
+        break;
+      default:
+        output = window.paletteExporter.generateCssVariables(colors);
+    }
+
+    elements.exportCodeContent.textContent = output;
+  }
+
+  async function handleCopyExportCode() {
+    const text = elements.exportCodeContent.textContent;
+    await window.paletteExporter.copyToClipboard(text);
+    showToast(window.i18n.t('copied'), 'success');
+  }
+
+  function handleDownloadExportFile() {
+    const colors = state.sortedColors;
+    const cleanName = (state.fileName || "palette").replace(/\.[^/.]+$/, "");
+
+    switch (activeExportTab) {
+      case 'css':
+        window.paletteExporter.downloadFile(
+          window.paletteExporter.generateCssVariables(colors),
+          `${cleanName}-variables.css`,
+          'text/css'
+        );
+        break;
+      case 'json':
+        window.paletteExporter.downloadFile(
+          window.paletteExporter.generateJson(colors, cleanName),
+          `${cleanName}-palette.json`,
+          'application/json'
+        );
+        break;
+      case 'tailwind':
+        window.paletteExporter.downloadFile(
+          window.paletteExporter.generateTailwind(colors),
+          `tailwind.colors.js`,
+          'application/javascript'
+        );
+        break;
+      case 'txt':
+        window.paletteExporter.downloadFile(
+          window.paletteExporter.generateTxt(colors, cleanName),
+          `${cleanName}-palette.txt`,
+          'text/plain'
+        );
+        break;
+      case 'svg':
+        window.paletteExporter.downloadFile(
+          window.paletteExporter.generateSvg(colors),
+          `${cleanName}-palette.svg`,
+          'image/svg+xml'
+        );
+        break;
+      default:
+        window.paletteExporter.downloadFile(
+          elements.exportCodeContent.textContent,
+          `${cleanName}-export.txt`,
+          'text/plain'
+        );
+    }
+    showToast(window.i18n.t('copied'), 'success');
+  }
+
+  // --- TOAST NOTIFICATIONS ---
+  async function copyTextWithToast(text, customMessage = null) {
+    await window.paletteExporter.copyToClipboard(text);
+    showToast(customMessage || `${window.i18n.t('copied')} (${text})`, 'success');
+  }
+
+  function showToast(message, type = 'success') {
+    if (toastTimeout) {
+      clearTimeout(toastTimeout);
+    }
+
+    elements.toastMessage.textContent = message;
+    elements.toast.className = `toast toast-${type} show`;
+
+    if (type === 'error') {
+      elements.toastIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+    } else {
+      elements.toastIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+    }
+
+    toastTimeout = setTimeout(() => {
+      elements.toast.classList.remove('show');
+    }, 2400);
+  }
+});
+
+</script>
+</body>
+</html>
+
